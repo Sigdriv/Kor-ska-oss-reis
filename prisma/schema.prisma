@@ -44,3 +44,12 @@ model User {
   emailVerified DateTime?
   accounts      Account[]
 }
+
+model Paamelte {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  teamName    String   @unique
+  countParticipants String
+  createdAt   DateTime @default(now())
+}

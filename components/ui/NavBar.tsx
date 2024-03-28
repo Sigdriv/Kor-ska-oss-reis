@@ -22,8 +22,10 @@ export default async function NavBar() {
     <nav className="flex items-center justify-evenly w-screen text-white bg-slate-900 py-2">
       <div className="flex items-center justify-evenly w-screen">
         <Link href="/">Home </Link>
-        <Link href="/auth/login">Login </Link>
-        <Link href="/auth/register">Register </Link>
+        <Link href="/about">Om oss </Link>
+        <Link href="/join">Bli med </Link>
+        {!session ? <Link href="/auth/login">Login </Link> : null}
+        {/* <Link href="/auth/register">Register </Link> */}
       </div>
 
       {!!session ? (
@@ -45,18 +47,18 @@ export default async function NavBar() {
               )}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>Min konto</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <Link href="/dashboard/profile">
                   <DropdownMenuItem>
                     <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
+                    <span>Profil</span>
                   </DropdownMenuItem>
                 </Link>
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
+                  <span>Innstillinger</span>
                   <DropdownMenuShortcut>⌘,</DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
@@ -66,6 +68,7 @@ export default async function NavBar() {
                 <Link href="/auth/signout">
                   <DropdownMenuItem>
                     <LogOut className="mr-2 h-4 w-4" />
+                    <span>Logg ut</span>
                   </DropdownMenuItem>
                 </Link>
               </DropdownMenuGroup>
@@ -73,9 +76,6 @@ export default async function NavBar() {
           </DropdownMenu>
         </div>
       ) : null}
-      {/* <div className="mr-4">
-        <ModeToggle />
-      </div> */}
     </nav>
   );
 }

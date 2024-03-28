@@ -15,21 +15,17 @@ export const RegisterSchema = z.object({
 
 export const profileFormSchema = z.object({
   name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+    message: "Venligst skriv inn et navn.",
   }),
   email: z
     .string({
-      required_error: "Please select an email to display.",
+      required_error: "Venligst skriv inn en e-postadresse.",
     })
     .email(),
-  picture: z.string({
-    required_error: "Please select a profile picture.",
+  teamName: z.string().min(2, {
+    message: "Venligst skriv inn et lagnavn.",
   }),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
+  countParticipants: z.string().min(1, {
+    message: "Venligst skriv inn antall deltakere.",
+  }),
 });

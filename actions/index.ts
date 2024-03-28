@@ -1,6 +1,6 @@
 "use server";
 
-import { LoginValue, RegisterValue } from "@/types";
+import { LoginValue, ProfileFormValues, RegisterValue } from "@/types";
 import { LoginSchema, RegisterSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
@@ -80,4 +80,32 @@ export const handleSignOut = async () => {
 export const getUser = async () => {
   const session = await auth();
   return session;
+};
+
+export const registerTeam = async (value: ProfileFormValues) => {
+  const { name, email, teamName, countParticipants } = value;
+
+  const existingTeam = await db.paamelte.findFirst({
+    where: {
+      teamName: {
+        equals: teamName,
+        mode: "insensitive", // This makes the comparison case-insensitive
+      },
+    },
+  });
+
+  if (existingTeam) {
+    return { error: "Team name already in use!" };
+  }
+
+  await db.paamelte.create({
+    data: {
+      name,
+      email,
+      teamName,
+      countParticipants,
+    },
+  });
+
+  return { success: "Team created!" };
 };
