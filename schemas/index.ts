@@ -25,7 +25,12 @@ export const profileFormSchema = z.object({
   teamName: z.string().min(2, {
     message: "Venligst skriv inn et lagnavn.",
   }),
-  countParticipants: z.string().min(1, {
-    message: "Venligst skriv inn antall deltakere.",
-  }),
+  countParticipants: z
+    .string()
+    .min(1, {
+      message: "Venligst skriv inn antall deltakere.",
+    })
+    .refine((data) => parseInt(data) > 0, {
+      message: "Antall deltakere må være større enn 0.",
+    }),
 });

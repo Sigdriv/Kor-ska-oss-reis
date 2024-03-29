@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { SidebarNavItem } from "@/types";
+import { SidebarNavItem } from "@/types/types";
 
 export interface DocsSidebarNavProps {
   items: SidebarNavItem[];

@@ -46,12 +46,19 @@ export default {
     }),
   ],
   // callbacks: {
-  //   async session({ session, user, token }: any) {
+  //   async session({ session, user, token, role }: any) {
   //     return {
   //       ...session,
   //       user,
   //       token,
-  //     }
-  //   }
-  // }
+  //     };
+  //   },
+  // },
+
+  // callbacks: {
+  //   session: async ({ session, user }) => {
+  //     session.user.role = user.role; // Add the role to the session
+  //     return Promise.resolve(session);
+  //   },
+  // },
 } satisfies NextAuthConfig;

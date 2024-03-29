@@ -1,6 +1,6 @@
 "use server";
 
-import { LoginValue, ProfileFormValues, RegisterValue } from "@/types";
+import { LoginValue, ProfileFormValues, RegisterValue } from "@/types/types";
 import { LoginSchema, RegisterSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
@@ -103,9 +103,17 @@ export const registerTeam = async (value: ProfileFormValues) => {
       name,
       email,
       teamName,
-      countParticipants,
+      countParticipants: parseInt(countParticipants),
     },
   });
 
   return { success: "Team created!" };
 };
+
+export const getTeams = async () => {
+  return await db.paamelte.findMany();
+};
+
+export const getTeamsCount = async () => {
+  return await db.paamelte.count();
+}

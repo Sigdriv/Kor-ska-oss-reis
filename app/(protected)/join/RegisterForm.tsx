@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState, useTransition } from "react";
 import { getUser, registerTeam } from "@/actions";
 import { profileFormSchema } from "@/schemas";
-import { ProfileFormValues } from "@/types";
+import { ProfileFormValues } from "@/types/types";
 
 export function RegisterForm() {
   const [underDevelopment] = useState(false);

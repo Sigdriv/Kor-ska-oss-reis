@@ -33,28 +33,14 @@ import { profileFormSchema } from "@/schemas";
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  // bio: "I own a computer.",
-  urls: [
-    { value: "https://shadcn.com" },
-    { value: "http://twitter.com/shadcn" },
-  ],
-};
-
 export function ProfileForm() {
-  const [underDevelopment] = useState(false);
+  const [underDevelopment] = useState(true);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
       name: "",
       email: "Email",
-      // bio: "I own a computer.",
-      urls: [
-        { value: "https://shadcn.com" },
-        { value: "http://twitter.com/shadcn" },
-      ],
     },
   });
 
@@ -74,11 +60,6 @@ export function ProfileForm() {
     fetchUser();
   }, []);
 
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  });
-
   function onSubmit(data: ProfileFormValues) {
     toast({
       title: "You submitted the following values:",
@@ -96,91 +77,90 @@ export function ProfileForm() {
         Profile update is under implementing
       </h1>
     </main>
-  ) : (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="picture"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Profile picture</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select where you want to use your profile picture from" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">Google</SelectItem>
-                  <SelectItem value="m@google.com">GitHub</SelectItem>
-                  <SelectItem value="m@support.com">Discord</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && "sr-only")}>
-                    URLs
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && "sr-only")}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2"
-            onClick={() => append({ value: "" })}
-          >
-            Add URL
-          </Button>
-        </div>
-        <Button type="submit">Update profile</Button>
-      </form>
-    </Form>
-  );
+  ) : // <Form {...form}>
+  //   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+  //     <FormField
+  //       control={form.control}
+  //       name="name"
+  //       render={({ field }) => (
+  //         <FormItem>
+  //           <FormLabel>Name</FormLabel>
+  //           <FormControl>
+  //             <Input {...field} />
+  //           </FormControl>
+  //           <FormMessage />
+  //         </FormItem>
+  //       )}
+  //     />
+  //     <FormField
+  //       control={form.control}
+  //       name="email"
+  //       render={({ field }) => (
+  //         <FormItem>
+  //           <FormLabel>Email</FormLabel>
+  //           <FormControl>
+  //             <Input {...field} />
+  //           </FormControl>
+  //           <FormMessage />
+  //         </FormItem>
+  //       )}
+  //     />
+  //     <FormField
+  //       control={form.control}
+  //       name="picture"
+  //       render={({ field }) => (
+  //         <FormItem>
+  //           <FormLabel>Profile picture</FormLabel>
+  //           <Select onValueChange={field.onChange} defaultValue={field.value}>
+  //             <FormControl>
+  //               <SelectTrigger>
+  //                 <SelectValue placeholder="Select where you want to use your profile picture from" />
+  //               </SelectTrigger>
+  //             </FormControl>
+  //             <SelectContent>
+  //               <SelectItem value="m@example.com">Google</SelectItem>
+  //               <SelectItem value="m@google.com">GitHub</SelectItem>
+  //               <SelectItem value="m@support.com">Discord</SelectItem>
+  //             </SelectContent>
+  //           </Select>
+  //           <FormMessage />
+  //         </FormItem>
+  //       )}
+  //     />
+  //     <div>
+  //       {fields.map((field, index) => (
+  //         <FormField
+  //           control={form.control}
+  //           key={field.id}
+  //           name={`urls.${index}.value`}
+  //           render={({ field }) => (
+  //             <FormItem>
+  //               <FormLabel className={cn(index !== 0 && "sr-only")}>
+  //                 URLs
+  //               </FormLabel>
+  //               <FormDescription className={cn(index !== 0 && "sr-only")}>
+  //                 Add links to your website, blog, or social media profiles.
+  //               </FormDescription>
+  //               <FormControl>
+  //                 <Input {...field} />
+  //               </FormControl>
+  //               <FormMessage />
+  //             </FormItem>
+  //           )}
+  //         />
+  //       ))}
+  //       <Button
+  //         type="button"
+  //         variant="outline"
+  //         size="sm"
+  //         className="mt-2"
+  //         onClick={() => append({ value: "" })}
+  //       >
+  //         Add URL
+  //       </Button>
+  //     </div>
+  //     <Button type="submit">Update profile</Button>
+  //   </form>
+  // </Form>
+  null;
 }

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { Icons } from "./components/ui/icons";
-import { profileFormSchema } from "./schemas";
+import { Icons } from "../components/ui/icons";
+import { profileFormSchema } from "../schemas";
 
 export type LoginValue = {
   email: string;
@@ -27,6 +27,14 @@ export interface NavItem {
   external?: boolean;
   icon?: keyof typeof Icons;
   label?: string;
+}
+
+export interface Teams {
+  id: string;
+  name: string;
+  email: string;
+  teamName: number;
+  countParticipants: number;
 }
 
 export interface NavItemWithChildren extends NavItem {

@@ -9,7 +9,7 @@ export default function Footer() {
         <Link href="https://www.github.com/sigdriv">
           <strong>Sigurd</strong>
         </Link>{" "}
-        for "Kor ska oss reis"
+        for &quot;Kor ska oss reis&quot;
       </h3>
     </footer>
   );
