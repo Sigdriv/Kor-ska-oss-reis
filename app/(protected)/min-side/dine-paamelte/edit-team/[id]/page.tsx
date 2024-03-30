@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Teams } from "@/types/types";
 import { getTeamById } from "@/actions";
+import { UpdatePaamelte } from "./UpdatePaamelte";
 
 export default function TeamEditPage() {
   const [team, setTeam] = useState<Teams>();
@@ -15,6 +16,7 @@ export default function TeamEditPage() {
     const fetchTeam = async () => {
       try {
         const teamData = await getTeamById(id); // Fetch team data from API using id
+        teamData.countParticipants = teamData.countParticipants.toString();
         setTeam(teamData);
       } catch (error) {
         console.error("Error fetching team data:", error);
@@ -26,14 +28,14 @@ export default function TeamEditPage() {
     }
   }, [id]);
 
-  if (!team) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <div>
-      <h1>Edit Team</h1>
-      <p>Team Name: {team.teamName}</p>
-    </div>
+  return team ? (
+    <main>
+      <div className=" flex justify-center pt-10 text-2xl pb-24">
+        <h1>Oppdater laget: {team.teamName}</h1>
+      </div>
+      <UpdatePaamelte {...team} />
+    </main>
+  ) : (
+    <p>Loading...</p>
   );
 }

@@ -23,10 +23,12 @@ export default async function Pamelte() {
 
   return (
     <main className="w-screen">
-      <h1>Påmelte</h1>
+      <div className=" flex justify-center items-center text-2xl pt-20">
+        <h1>Årets påmelte lag</h1>
+      </div>
       <div className="p-24">
         <Table>
-          <TableCaption>Liste over påmelte lag</TableCaption>
+          <TableCaption>Liste over årets påmelte lag</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[200px]">Kontakt person</TableHead>
@@ -39,9 +41,9 @@ export default async function Pamelte() {
             {teams.map((data: Teams) => (
               <TableRow key={data.id}>
                 <TableCell className="font-medium">{data.name}</TableCell>
-                <TableCell><Link href={`mailto:${data.email}`}>
-                {data.email}
-                </Link></TableCell>
+                <TableCell>
+                  <Link href={`mailto:${data.email}`}>{data.email}</Link>
+                </TableCell>
                 <TableCell>{data.teamName}</TableCell>
                 <TableCell className="text-right">
                   {data.countParticipants}

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Icons } from "../components/ui/icons";
-import { profileFormSchema } from "../schemas";
+import { profileFormSchema, updateTeamsSchema } from "../schemas";
 
 export type LoginValue = {
   email: string;
@@ -33,8 +33,8 @@ export interface Teams {
   id: string;
   name: string;
   email: string;
-  teamName: number;
-  countParticipants: number;
+  teamName: string;
+  countParticipants: string;
 }
 
 export interface teamsByUser {
@@ -52,3 +52,5 @@ export interface MainNavItem extends NavItem {}
 export interface SidebarNavItem extends NavItemWithChildren {}
 
 export type ProfileFormValues = z.infer<typeof profileFormSchema>;
+
+export type UpdateTeamsValues = z.infer<typeof updateTeamsSchema>;

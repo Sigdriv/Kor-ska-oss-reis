@@ -1,6 +1,11 @@
 "use server";
 
-import { LoginValue, ProfileFormValues, RegisterValue } from "@/types/types";
+import {
+  LoginValue,
+  ProfileFormValues,
+  RegisterValue,
+  UpdateTeamsValues,
+} from "@/types/types";
 import { LoginSchema, RegisterSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
@@ -60,7 +65,7 @@ export const register = async (values: RegisterValue) => {
   });
 
   if (existingUser) {
-    return { error: "Email already in use!" };
+    return { error: "Epost er allerede i bruk" };
   }
 
   await db.user.create({
@@ -71,7 +76,7 @@ export const register = async (values: RegisterValue) => {
     },
   });
 
-  return { success: "User created!" };
+  return { success: "Bruker opprettet" };
 };
 
 export const handleSignOut = async () => {
@@ -95,7 +100,7 @@ export const registerTeam = async (value: ProfileFormValues) => {
   });
 
   if (existingTeam) {
-    return { error: "Team name already in use!" };
+    return { error: "Lagnavn er allerede i bruk!" };
   }
 
   await db.paamelte.create({
@@ -107,7 +112,7 @@ export const registerTeam = async (value: ProfileFormValues) => {
     },
   });
 
-  return { success: "Team created!" };
+  return { success: "Lag registrert" };
 };
 
 export const getTeams = async () => {
@@ -132,4 +137,37 @@ export const getTeamById = async (id: string) => {
       id,
     },
   });
+};
+
+export const updateTeam = async (value: UpdateTeamsValues) => {
+  const { id, name, email, teamName, countParticipants } = value;
+
+  const existingTeam = await db.paamelte.findFirst({
+    where: {
+      teamName: {
+        equals: teamName,
+        mode: "insensitive", // This makes the comparison case-insensitive
+      },
+    },
+  });
+
+  console.log(existingTeam);
+
+  if (existingTeam.teamName === teamName) {
+    return { error: "Lagnavn er allerede i bruk!" };
+  }
+
+  await db.paamelte.update({
+    where: {
+      id,
+    },
+    data: {
+      name,
+      email,
+      teamName,
+      countParticipants: parseInt(countParticipants),
+    },
+  });
+
+  return { success: "Lag oppdatert!" };
 };

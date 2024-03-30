@@ -9,7 +9,7 @@ import {
 import { teamsByUser } from "@/types/types";
 import Link from "next/link";
 
-export default async function PaamelteCard({
+export default async function DinePaamelte({
   teamName,
   countParticipants,
   id,

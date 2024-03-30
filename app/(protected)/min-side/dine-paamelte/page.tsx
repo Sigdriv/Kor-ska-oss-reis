@@ -1,5 +1,5 @@
 import React from "react";
-import PaamelteCard from "./PaamelteCard";
+import DinePaamelte from "./DinePaamelte";
 import { auth } from "@/auth";
 import { getTeamsByUser } from "@/actions";
 import { teamsByUser } from "@/types/types";
@@ -11,15 +11,14 @@ export default async function MinSide() {
     temasByUser = await getTeamsByUser(session?.user?.email);
   }
 
-  console.log(temasByUser);
-
   return (
-    <div>
-      <h1>Min side</h1>
+    <main className="w-screen p-20">
       <h1>Dine påmelte lag:</h1>
-      {temasByUser.map((team: teamsByUser) => (
-        <PaamelteCard {...team} />
-      ))}
-    </div>
+      <div className=" grid grid-cols-3">
+        {temasByUser.map((team: teamsByUser) => (
+          <DinePaamelte {...team} />
+        ))}
+      </div>
+    </main>
   );
 }
