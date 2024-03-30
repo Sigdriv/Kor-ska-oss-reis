@@ -37,6 +37,12 @@ export interface Teams {
   countParticipants: number;
 }
 
+export interface teamsByUser {
+  teamName: string;
+  countParticipants: number;
+  id: string;
+}
+
 export interface NavItemWithChildren extends NavItem {
   items: NavItemWithChildren[];
 }

@@ -116,4 +116,20 @@ export const getTeams = async () => {
 
 export const getTeamsCount = async () => {
   return await db.paamelte.count();
-}
+};
+
+export const getTeamsByUser = async (email: string) => {
+  return await db.paamelte.findMany({
+    where: {
+      email,
+    },
+  });
+};
+
+export const getTeamById = async (id: string) => {
+  return await db.paamelte.findUnique({
+    where: {
+      id,
+    },
+  });
+};
