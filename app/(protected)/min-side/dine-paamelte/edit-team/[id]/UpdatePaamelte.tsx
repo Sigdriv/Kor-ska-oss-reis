@@ -24,7 +24,7 @@ export function UpdatePaamelte({
   email,
   teamName,
   countParticipants,
-}: UpdateTeamsValues) {
+}: UpdateTeamsValues, key: string) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -52,7 +52,7 @@ export function UpdatePaamelte({
 
   return (
     <Form {...form}>
-      <div className=" flex items-center justify-center">
+      <div className=" flex items-center justify-center" key={key}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-96">
           <FormField
             name="name"

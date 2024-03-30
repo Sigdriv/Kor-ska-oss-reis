@@ -16,7 +16,7 @@ export default async function MinSide() {
       <h1>Dine påmelte lag:</h1>
       <div className=" grid grid-cols-3">
         {temasByUser.map((team: teamsByUser) => (
-          <DinePaamelte {...team} />
+          <DinePaamelte {...team} key={team.id}/>
         ))}
       </div>
     </main>

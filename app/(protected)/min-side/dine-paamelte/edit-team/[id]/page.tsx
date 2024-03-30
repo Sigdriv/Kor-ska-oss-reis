@@ -33,7 +33,7 @@ export default function TeamEditPage() {
       <div className=" flex justify-center pt-10 text-2xl pb-24">
         <h1>Oppdater laget: {team.teamName}</h1>
       </div>
-      <UpdatePaamelte {...team} />
+      <UpdatePaamelte {...team} key={team.id}/>
     </main>
   ) : (
     <p>Loading...</p>
