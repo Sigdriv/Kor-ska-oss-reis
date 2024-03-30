@@ -1,8 +1,8 @@
 "use server";
 
 import {
+  CreateTeamsValues,
   LoginValue,
-  ProfileFormValues,
   RegisterValue,
   UpdateTeamsValues,
 } from "@/types/types";
@@ -87,8 +87,8 @@ export const getUser = async () => {
   return session;
 };
 
-export const registerTeam = async (value: ProfileFormValues) => {
-  const { name, email, teamName, countParticipants } = value;
+export const registerTeam = async (value: CreateTeamsValues) => {
+  const { name, email, teamName, countParticipants, userEmail } = value;
 
   const existingTeam = await db.paamelte.findFirst({
     where: {
@@ -103,16 +103,40 @@ export const registerTeam = async (value: ProfileFormValues) => {
     return { error: "Lagnavn er allerede i bruk!" };
   }
 
-  await db.paamelte.create({
-    data: {
-      name,
-      email,
-      teamName,
-      countParticipants: parseInt(countParticipants),
-    },
-  });
+  try {
+    // Fetch the user by userId
+    const user = await db.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+    });
 
-  return { success: "Lag registrert" };
+    if (!user) {
+      return { error: "User not found" };
+    }
+
+    // Create paamelte associated with the user
+    await db.paamelte.create({
+      data: {
+        name,
+        email,
+        teamName,
+        countParticipants: parseInt(countParticipants),
+        createdBy: {
+          connect: {
+            id: user.id,
+          },
+        },
+      },
+    });
+
+    return { success: "Lag registrert" };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: "En feil oppsto under oppretting av lag, venligst prøv igjen",
+    };
+  }
 };
 
 export const getTeams = async () => {
@@ -124,9 +148,17 @@ export const getTeamsCount = async () => {
 };
 
 export const getTeamsByUser = async (email: string) => {
-  return await db.paamelte.findMany({
+  const user = await db.user.findUnique({
     where: {
       email,
+    },
+  });
+
+  return await db.paamelte.findMany({
+    where: {
+      createdBy: {
+        id: user.id,
+      },
     },
   });
 };
@@ -151,8 +183,6 @@ export const updateTeam = async (value: UpdateTeamsValues) => {
     },
   });
 
-  console.log(existingTeam);
-
   if (existingTeam.teamName === teamName) {
     return { error: "Lagnavn er allerede i bruk!" };
   }
@@ -170,4 +200,13 @@ export const updateTeam = async (value: UpdateTeamsValues) => {
   });
 
   return { success: "Lag oppdatert!" };
+};
+
+export const deleteTeam = async (id: string) => {
+  await db.paamelte.delete({
+    where: {
+      id,
+    },
+  });
+  return { status: 200, message: "Lag slettet!" };
 };

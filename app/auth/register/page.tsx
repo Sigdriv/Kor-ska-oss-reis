@@ -55,7 +55,6 @@ export default function SignUp() {
       <head>
         <title>Register</title>
         <meta name="Register" content="Register page" />
-        <link rel="icon" href="/favicon.ico" />
       </head>
       <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br text-white from-slate-900 to-slate-800">
         <Card className="text-white bg-slate-900 w-[400]">

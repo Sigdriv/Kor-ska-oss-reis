@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import {
   Form,
@@ -16,22 +15,22 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useTransition } from "react";
 import { getUser, registerTeam } from "@/actions";
-import { profileFormSchema } from "@/schemas";
-import { ProfileFormValues } from "@/types/types";
+import { CreateTeamsValues } from "@/types/types";
+import { createTeamsSchema } from "@/schemas";
 
 export function RegisterForm() {
-  const [underDevelopment] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+  const form = useForm<CreateTeamsValues>({
+    resolver: zodResolver(createTeamsSchema),
     defaultValues: {
       name: "",
       email: "",
       teamName: "",
       countParticipants: "",
+      userEmail: "",
     },
   });
 
@@ -47,11 +46,15 @@ export function RegisterForm() {
         "email",
         getSession?.user?.email ? getSession.user?.email : ""
       );
+      form.setValue(
+        "userEmail",
+        getSession?.user?.email ? getSession.user?.email : ""
+      );
     };
     fetchUser();
   }, []);
 
-  const onSubmit = (value: ProfileFormValues) => {
+  const onSubmit = (value: CreateTeamsValues) => {
     setError(null);
     setSuccess(null);
     startTransition(async () => {
@@ -111,6 +114,19 @@ export function RegisterForm() {
                 <FormLabel>Antall deltakere</FormLabel>
                 <FormControl>
                   <Input {...field} type="number" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="userEmail"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Opprettes av (kan ikke endres)</FormLabel>
+                <FormControl>
+                  <Input {...field} disabled />
                 </FormControl>
                 <FormMessage />
               </FormItem>
