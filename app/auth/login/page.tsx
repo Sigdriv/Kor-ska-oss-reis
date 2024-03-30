@@ -50,7 +50,8 @@ export default function LogIn() {
         }
       } else {
         // Redirect to the dashboard or the intended page
-        router.push("/dashboard");
+        router.push("/min-side");
+        window.location.reload();
       }
     });
   };
@@ -70,7 +71,6 @@ export default function LogIn() {
       <head>
         <title>Login</title>
         <meta name="description" content="Login page" />
-        <link rel="icon" href="/favicon.ico" />
       </head>
       <main className="flex flex-col items-center justify-center min-h-screen ">
         <Card className="text-white bg-slate-900 w-[400]">
