@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Teams } from "@/types/types";
 import { getTeamById } from "@/actions";
 import { UpdatePaamelte } from "./UpdatePaamelte";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function TeamEditPage() {
   const [team, setTeam] = useState<Teams>();
@@ -16,7 +17,9 @@ export default function TeamEditPage() {
     const fetchTeam = async () => {
       try {
         const teamData = await getTeamById(id); // Fetch team data from API using id
-        teamData.countParticipants = teamData.countParticipants.toString();
+        if (!!teamData)
+          teamData.countParticipants = teamData.countParticipants.toString();
+
         setTeam(teamData);
       } catch (error) {
         console.error("Error fetching team data:", error);
@@ -28,14 +31,19 @@ export default function TeamEditPage() {
     }
   }, [id]);
 
-  return team ? (
+  return !team ? (
+    <div className=" flex flex-col justify-center items-center pt-52 text-2xl pb-24 gap-16">
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+    </div>
+  ) : (
     <main>
       <div className=" flex justify-center pt-10 text-2xl pb-24">
         <h1>Oppdater laget: {team.teamName}</h1>
       </div>
-      <UpdatePaamelte {...team} key={team.id}/>
+      <UpdatePaamelte {...team} key={team.id} />
     </main>
-  ) : (
-    <p>Loading...</p>
   );
 }
