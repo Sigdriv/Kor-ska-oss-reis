@@ -43,7 +43,9 @@ export function UpdatePaamelte(
     setSuccess(null);
     startTransition(async () => {
       const data = await updateTeam(value);
-      if (data?.error) setError(data.error);
+
+      // ToDo: needs to add existing team check when update team
+      // if (data?.error) setError(data.error);
       if (data?.success) setSuccess(data.success);
     });
   };

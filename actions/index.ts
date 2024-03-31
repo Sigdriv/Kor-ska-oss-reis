@@ -174,18 +174,20 @@ export const getTeamById = async (id: string) => {
 export const updateTeam = async (value: UpdateTeamsValues) => {
   const { id, name, email, teamName, countParticipants } = value;
 
-  const existingTeam = await db.paamelte.findFirst({
-    where: {
-      teamName: {
-        equals: teamName,
-        mode: "insensitive", // This makes the comparison case-insensitive
-      },
-    },
-  });
 
-  if (existingTeam.teamName === teamName) {
-    return { error: "Lagnavn er allerede i bruk!" };
-  }
+  // ToDo: needs to add existing team check when update team
+  // const existingTeam = await db.paamelte.findFirst({
+  //   where: {
+  //     teamName: {
+  //       equals: teamName,
+  //       mode: "insensitive", // This makes the comparison case-insensitive
+  //     },
+  //   },
+  // });
+
+  // if (existingTeam.teamName === teamName) {
+  //   return { error: "Lagnavn er allerede i bruk!" };
+  // }
 
   await db.paamelte.update({
     where: {
