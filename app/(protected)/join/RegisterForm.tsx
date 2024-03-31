@@ -17,11 +17,13 @@ import { useEffect, useState, useTransition } from "react";
 import { getUser, registerTeam } from "@/actions";
 import { CreateTeamsValues } from "@/types/types";
 import { createTeamsSchema } from "@/schemas";
+import { useRouter } from "next/navigation";
 
 export function RegisterForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const routes = useRouter();
 
   const form = useForm<CreateTeamsValues>({
     resolver: zodResolver(createTeamsSchema),
@@ -60,7 +62,11 @@ export function RegisterForm() {
     startTransition(async () => {
       const data = await registerTeam(value);
       if (data?.error) setError(data.error);
-      if (data?.success) setSuccess(data.success);
+      if (data?.success) {
+        setSuccess(data.success);
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        routes.push("/min-side/dine-paamelte");
+      }
     });
   };
 
