@@ -15,9 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, useTransition } from "react";
-import { registerTeam, updateTeam } from "@/actions";
+import { updateTeam } from "@/actions";
 import { updateTeamsSchema } from "@/schemas";
-import { ProfileFormValues, UpdateTeamsValues } from "@/types/types";
+import { UpdateTeamsValues } from "@/types/types";
+import { useRouter } from "next/navigation";
 
 export function UpdatePaamelte(
   { id, name, email, teamName, countParticipants }: UpdateTeamsValues,
@@ -26,6 +27,7 @@ export function UpdatePaamelte(
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const router = useRouter();
 
   const form = useForm<UpdateTeamsValues>({
     resolver: zodResolver(updateTeamsSchema),
@@ -46,7 +48,11 @@ export function UpdatePaamelte(
 
       // ToDo: needs to add existing team check when update team
       // if (data?.error) setError(data.error);
-      if (data?.success) setSuccess(data.success);
+      if (data?.success) {
+        setSuccess(data.success);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        router.push("/min-side/dine-paamelte")
+      }
     });
   };
 
