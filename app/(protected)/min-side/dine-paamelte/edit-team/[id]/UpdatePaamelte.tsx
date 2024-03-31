@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,13 +19,10 @@ import { registerTeam, updateTeam } from "@/actions";
 import { updateTeamsSchema } from "@/schemas";
 import { ProfileFormValues, UpdateTeamsValues } from "@/types/types";
 
-export function UpdatePaamelte({
-  id,
-  name,
-  email,
-  teamName,
-  countParticipants,
-}: UpdateTeamsValues, key: string) {
+export function UpdatePaamelte(
+  { id, name, email, teamName, countParticipants }: UpdateTeamsValues,
+  key: string
+) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -55,6 +53,7 @@ export function UpdatePaamelte({
       <div className=" flex items-center justify-center" key={key}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-96">
           <FormField
+            control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
@@ -86,8 +85,11 @@ export function UpdatePaamelte({
               <FormItem>
                 <FormLabel>Lagnavn</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} disabled />
                 </FormControl>
+                <FormDescription>
+                  Lagnavnet kan ikke endres enda
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
