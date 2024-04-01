@@ -35,6 +35,7 @@ export default async function DinePaamelte({
       alert("Laget er slettet");
     }
   };
+
   return (
     <main className=" pt-20 flex items-center justify-center">
       <Card className="w-96">
