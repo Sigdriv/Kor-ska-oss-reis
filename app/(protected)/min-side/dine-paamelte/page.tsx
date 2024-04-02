@@ -4,10 +4,12 @@ import DinePaamelte from "./DinePaamelte";
 import { getTeamsByUser, getUser } from "@/actions";
 import { teamsByUser } from "@/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/use-toast";
 
-export default function MinSide() {
+export default function Dine_Pamelte() {
   const [temasByUser, setTemasByUser] = useState<teamsByUser[]>();
   const [isPending, startTransition] = useTransition();
+  const [deleted, setDeleted] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +21,12 @@ export default function MinSide() {
             setTemasByUser(data);
           }
         } catch (error) {
-          console.error("Error fetching team data:", error);
+          toast({
+            title: "Feil",
+            description:
+              "En feil oppstod under henting av lag,\nvenligst prøv igjen senere",
+            variant: "destructive",
+          });
         }
       });
     };
@@ -30,7 +37,7 @@ export default function MinSide() {
     <main className="w-screen p-20 text-2xl">
       <h1>Dine lag:</h1>
       <div className=" grid grid-cols-3">
-        {!!isPending ? (
+        {!!isPending || deleted ? (
           <div className="w-screen grid grid-cols-3 pt-20 text-2xl pb-24 ">
             <Skeleton className="w-[300px] h-[200px] rounded-md" />
             <Skeleton className="w-[300px] h-[200px] rounded-md" />
@@ -42,7 +49,7 @@ export default function MinSide() {
           </div>
         ) : (
           temasByUser.map((team: teamsByUser) => (
-            <DinePaamelte {...team} key={team.id} />
+            <DinePaamelte {...team} setDeleted={setDeleted} key={team.id} />
           ))
         )}
       </div>

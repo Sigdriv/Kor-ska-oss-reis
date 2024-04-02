@@ -22,20 +22,38 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/use-toast";
 
+export interface props {
+  setDeleted: (value: boolean) => void;
+}
+
 export default function DinePaamelte({
   teamName,
   countParticipants,
   id,
-}: teamsByUser) {
+  setDeleted,
+}: teamsByUser & props) {
   const handleDeleteTeam = async () => {
     const response = await deleteTeam(id);
 
     if (response.status === 200) {
+      setDeleted(true);
       toast({
         title: "Lag slettet",
-        description: "Laget vart suksessfult slettet",
+        description: response.message,
         variant: "default",
       });
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      location.reload();
+    }
+    if (response.status === 500) {
+      setDeleted(true);
+      toast({
+        title: "Feil",
+        description: response.message,
+        variant: "destructive",
+      });
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      location.reload();
     }
   };
 

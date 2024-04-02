@@ -19,6 +19,7 @@ import { updateTeam } from "@/actions";
 import { updateTeamsSchema } from "@/schemas";
 import { UpdateTeamsValues } from "@/types/types";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/ui/use-toast";
 
 export function UpdatePaamelte(
   { id, name, email, teamName, countParticipants }: UpdateTeamsValues,
@@ -41,20 +42,31 @@ export function UpdatePaamelte(
   });
 
   const onSubmit = (value: UpdateTeamsValues) => {
-    setError(null);
-    setSuccess(null);
     startTransition(async () => {
       const data = await updateTeam(value);
 
       // ToDo: needs to add existing team check when update team
-      // if (data?.error) setError(data.error);
-      if (data?.success) {
-        setSuccess(data.success);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        router.push("/min-side/dine-paamelte")
+      if (data.success) {
+        toast({
+          title: "Lag oppdatert",
+          description: data.success,
+          variant: "default",
+        });
+        // await new Promise((resolve) => setTimeout(resolve, 5000));
+        router.push("/min-side/dine-paamelte");
+      }
+      if (data.error) {
+        toast({
+          title: "Feil",
+          description: data.error,
+          variant: "destructive",
+        });
+        await new Promise((resolve) => setTimeout(resolve, 5000));
       }
     });
   };
+
+  const handleDeleteTeam = async () => {};
 
   return (
     <Form {...form}>
@@ -93,11 +105,8 @@ export function UpdatePaamelte(
               <FormItem>
                 <FormLabel>Lagnavn</FormLabel>
                 <FormControl>
-                  <Input {...field} disabled />
+                  <Input {...field} />
                 </FormControl>
-                <FormDescription>
-                  Lagnavnet kan ikke endres enda
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

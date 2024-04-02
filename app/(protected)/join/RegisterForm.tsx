@@ -20,6 +20,7 @@ import { CreateTeamsValues } from "@/types/types";
 import { createTeamsSchema } from "@/schemas";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/use-toast";
 
 export function RegisterForm() {
   const [isPending, startTransition] = useTransition();
@@ -60,15 +61,41 @@ export function RegisterForm() {
     setLoading(false);
   }, []);
 
+  // const onSubmit = (value: CreateTeamsValues) => {
+  //   setError(null);
+  //   setSuccess(null);
+  //   startTransition(async () => {
+  //     const data = await registerTeam(value);
+  //     if (data?.error) setError(data.error);
+  //     if (data?.success) {
+  //       setSuccess(data.success);
+  //       await new Promise((resolve) => setTimeout(resolve, 3000));
+  //       routes.push("/min-side/dine-paamelte");
+  //     }
+  //   });
+  // };
+
   const onSubmit = (value: CreateTeamsValues) => {
     setError(null);
     setSuccess(null);
     startTransition(async () => {
       const data = await registerTeam(value);
-      if (data?.error) setError(data.error);
+      if (data?.error) {
+        setError(data.error);
+        toast({
+          title: "Error",
+          description: data.error,
+          variant: "destructive",
+        });
+      }
       if (data?.success) {
         setSuccess(data.success);
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        toast({
+          title: "Success",
+          description: data.success,
+          variant: "default",
+        });
+        // await new Promise((resolve) => setTimeout(resolve, 3000));
         routes.push("/min-side/dine-paamelte");
       }
     });
@@ -156,11 +183,6 @@ export function RegisterForm() {
           {error && (
             <div className="text-red-500 text-center">
               <p>{error}</p>
-            </div>
-          )}
-          {success && (
-            <div className="text-green-500 text-center">
-              <p>{success}</p>
             </div>
           )}
           <div className="flex justify-center text-3xl">

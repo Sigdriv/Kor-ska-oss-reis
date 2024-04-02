@@ -130,7 +130,7 @@ export const registerTeam = async (value: CreateTeamsValues) => {
       },
     });
 
-    return { success: "Lag registrert" };
+    return { success: `Lag ved navn "${teamName}" registrert` };
   } catch (error) {
     console.error(error);
     return {
@@ -168,6 +168,9 @@ export const getTeamsByUser = async (email: string) => {
         id: user.id,
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 };
 
@@ -182,19 +185,26 @@ export const getTeamById = async (id: string) => {
 export const updateTeam = async (value: UpdateTeamsValues) => {
   const { id, name, email, teamName, countParticipants } = value;
 
-  // ToDo: needs to add existing team check when update team
-  // const existingTeam = await db.paamelte.findFirst({
-  //   where: {
-  //     teamName: {
-  //       equals: teamName,
-  //       mode: "insensitive", // This makes the comparison case-insensitive
-  //     },
-  //   },
-  // });
+  const existingTeam = await db.paamelte.findUnique({
+    where: {
+      id,
+    },
+  });
 
-  // if (existingTeam.teamName === teamName) {
-  //   return { error: "Lagnavn er allerede i bruk!" };
-  // }
+  if (existingTeam.teamName !== teamName) {
+    const teamWithNewName = await db.paamelte.findFirst({
+      where: {
+        teamName: {
+          equals: teamName,
+          mode: "insensitive", // This makes the comparison case-insensitive
+        },
+      },
+    });
+
+    if (teamWithNewName) {
+      return { error: "Lagnavn er allerede i bruk!" };
+    }
+  }
 
   await db.paamelte.update({
     where: {
@@ -212,10 +222,22 @@ export const updateTeam = async (value: UpdateTeamsValues) => {
 };
 
 export const deleteTeam = async (id: string) => {
-  await db.paamelte.delete({
+  const team = await db.paamelte.findUnique({
     where: {
       id,
     },
   });
-  return { status: 200, message: "Lag slettet!" };
+  try {
+    await db.paamelte.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return { status: 500, message: "En feil oppsto under sletting av lag" };
+  }
+  return {
+    status: 200,
+    message: `Lag ved navn "${team.teamName}" er slettet!`,
+  };
 };
