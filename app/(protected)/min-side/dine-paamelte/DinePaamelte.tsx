@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/use-toast";
 
 export default function DinePaamelte({
   teamName,
@@ -30,9 +31,11 @@ export default function DinePaamelte({
     const response = await deleteTeam(id);
 
     if (response.status === 200) {
-      // Reload the page
-      window.location.reload();
-      alert("Laget er slettet");
+      toast({
+        title: "Lag slettet",
+        description: "Laget vart suksessfult slettet",
+        variant: "default",
+      });
     }
   };
 
@@ -62,12 +65,14 @@ export default function DinePaamelte({
                 </DialogDescription>
               </DialogHeader>
               <div className="flex justify-center gap-10 py-4">
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDeleteTeam()}
-                >
-                  Ja, slett
-                </Button>
+                <DialogClose asChild>
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleDeleteTeam()}
+                  >
+                    Ja, slett
+                  </Button>
+                </DialogClose>
                 <DialogClose asChild>
                   <Button variant="secondary">Avbryt</Button>
                 </DialogClose>
