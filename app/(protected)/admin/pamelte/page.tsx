@@ -16,12 +16,14 @@ import Link from "next/link";
 export default async function Pamelte() {
   const teams = await getTeams();
 
-  console.log(teams);
-
   const totalParticipants = teams.reduce(
     (total: number, team: Teams) => total + team.countParticipants,
     0
   );
+
+  const uniqueEmails = [
+    ...new Set(teams.map((team: Teams) => team.email)),
+  ].join(";");
 
   return (
     <main className="w-screen">
@@ -57,7 +59,15 @@ export default async function Pamelte() {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={4}>Total</TableCell>
+              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell>
+                <Link
+                  href={`mailto:${uniqueEmails}?subject=Info angående "Kor ska oss reis"`}
+                >
+                  Send epost til alle
+                </Link>
+              </TableCell>
+              <TableCell className="">{}</TableCell>
               <TableCell className="text-right">{totalParticipants}</TableCell>
             </TableRow>
           </TableFooter>
