@@ -1,6 +1,11 @@
 "use server";
 
-import { LoginValue, ProfileFormValues, RegisterValue } from "@/types/types";
+import {
+  CreateTeamsValues,
+  LoginValue,
+  RegisterValue,
+  UpdateTeamsValues,
+} from "@/types/types";
 import { LoginSchema, RegisterSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
@@ -60,7 +65,7 @@ export const register = async (values: RegisterValue) => {
   });
 
   if (existingUser) {
-    return { error: "Email already in use!" };
+    return { error: "Epost er allerede i bruk" };
   }
 
   await db.user.create({
@@ -71,7 +76,7 @@ export const register = async (values: RegisterValue) => {
     },
   });
 
-  return { success: "User created!" };
+  return { success: "Bruker opprettet" };
 };
 
 export const handleSignOut = async () => {
@@ -82,8 +87,8 @@ export const getUser = async () => {
   return session;
 };
 
-export const registerTeam = async (value: ProfileFormValues) => {
-  const { name, email, teamName, countParticipants } = value;
+export const registerTeam = async (value: CreateTeamsValues) => {
+  const { name, email, teamName, countParticipants, userEmail } = value;
 
   const existingTeam = await db.paamelte.findFirst({
     where: {
@@ -95,10 +100,116 @@ export const registerTeam = async (value: ProfileFormValues) => {
   });
 
   if (existingTeam) {
-    return { error: "Team name already in use!" };
+    return { error: "Lagnavn er allerede i bruk!" };
   }
 
-  await db.paamelte.create({
+  try {
+    // Fetch the user by userId
+    const user = await db.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+    });
+
+    if (!user) {
+      return { error: "User not found" };
+    }
+
+    // Create paamelte associated with the user
+    await db.paamelte.create({
+      data: {
+        name,
+        email,
+        teamName,
+        countParticipants: parseInt(countParticipants),
+        createdBy: {
+          connect: {
+            id: user.id,
+          },
+        },
+      },
+    });
+
+    return { success: `Lag ved navn "${teamName}" registrert` };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: "En feil oppsto under oppretting av lag, venligst prøv igjen",
+    };
+  }
+};
+
+export const getTeams = async () => {
+  return await db.paamelte.findMany({
+    include: {
+      createdBy: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+};
+
+export const getTeamsCount = async () => {
+  return await db.paamelte.count();
+};
+
+export const getTeamsByUser = async (email: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  return await db.paamelte.findMany({
+    where: {
+      createdBy: {
+        id: user.id,
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
+
+export const getTeamById = async (id: string) => {
+  return await db.paamelte.findUnique({
+    where: {
+      id,
+    },
+  });
+};
+
+export const updateTeam = async (value: UpdateTeamsValues) => {
+  const { id, name, email, teamName, countParticipants } = value;
+
+  const existingTeam = await db.paamelte.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (existingTeam.teamName !== teamName) {
+    const teamWithNewName = await db.paamelte.findFirst({
+      where: {
+        teamName: {
+          equals: teamName,
+          mode: "insensitive", // This makes the comparison case-insensitive
+        },
+      },
+    });
+
+    if (teamWithNewName) {
+      return { error: "Lagnavn er allerede i bruk!" };
+    }
+  }
+
+  await db.paamelte.update({
+    where: {
+      id,
+    },
     data: {
       name,
       email,
@@ -107,13 +218,26 @@ export const registerTeam = async (value: ProfileFormValues) => {
     },
   });
 
-  return { success: "Team created!" };
+  return { success: "Lag oppdatert!" };
 };
 
-export const getTeams = async () => {
-  return await db.paamelte.findMany();
+export const deleteTeam = async (id: string) => {
+  const team = await db.paamelte.findUnique({
+    where: {
+      id,
+    },
+  });
+  try {
+    await db.paamelte.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return { status: 500, message: "En feil oppsto under sletting av lag" };
+  }
+  return {
+    status: 200,
+    message: `Lag ved navn "${team.teamName}" er slettet!`,
+  };
 };
-
-export const getTeamsCount = async () => {
-  return await db.paamelte.count();
-}

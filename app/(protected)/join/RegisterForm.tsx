@@ -2,11 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,22 +16,27 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useTransition } from "react";
 import { getUser, registerTeam } from "@/actions";
-import { profileFormSchema } from "@/schemas";
-import { ProfileFormValues } from "@/types/types";
+import { CreateTeamsValues } from "@/types/types";
+import { createTeamsSchema } from "@/schemas";
+import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/use-toast";
 
 export function RegisterForm() {
-  const [underDevelopment] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const routes = useRouter();
 
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+  const form = useForm<CreateTeamsValues>({
+    resolver: zodResolver(createTeamsSchema),
     defaultValues: {
       name: "",
       email: "",
       teamName: "",
       countParticipants: "",
+      userEmail: "",
     },
   });
 
@@ -47,21 +52,64 @@ export function RegisterForm() {
         "email",
         getSession?.user?.email ? getSession.user?.email : ""
       );
+      form.setValue(
+        "userEmail",
+        getSession?.user?.email ? getSession.user?.email : ""
+      );
     };
     fetchUser();
+    setLoading(false);
   }, []);
 
-  const onSubmit = (value: ProfileFormValues) => {
+  // const onSubmit = (value: CreateTeamsValues) => {
+  //   setError(null);
+  //   setSuccess(null);
+  //   startTransition(async () => {
+  //     const data = await registerTeam(value);
+  //     if (data?.error) setError(data.error);
+  //     if (data?.success) {
+  //       setSuccess(data.success);
+  //       await new Promise((resolve) => setTimeout(resolve, 3000));
+  //       routes.push("/min-side/dine-paamelte");
+  //     }
+  //   });
+  // };
+
+  const onSubmit = (value: CreateTeamsValues) => {
     setError(null);
     setSuccess(null);
     startTransition(async () => {
       const data = await registerTeam(value);
-      if (data?.error) setError(data.error);
-      if (data?.success) setSuccess(data.success);
+      if (data?.error) {
+        setError(data.error);
+        toast({
+          title: "Error",
+          description: data.error,
+          variant: "destructive",
+        });
+      }
+      if (data?.success) {
+        setSuccess(data.success);
+        toast({
+          title: "Success",
+          description: data.success,
+          variant: "default",
+        });
+        // await new Promise((resolve) => setTimeout(resolve, 3000));
+        routes.push("/min-side/dine-paamelte");
+      }
     });
   };
 
-  return (
+  return loading ? (
+    <div className=" flex flex-col justify-center items-center pt-10 text-2xl pb-24 gap-16">
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
+    </div>
+  ) : (
     <Form {...form}>
       <div className=" flex items-center justify-center">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-96">
@@ -116,14 +164,25 @@ export function RegisterForm() {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="userEmail"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Opprettes av</FormLabel>
+                <FormControl>
+                  <Input {...field} disabled />
+                </FormControl>
+                <FormDescription>
+                  Eposten som er registrert på din bruker
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           {error && (
             <div className="text-red-500 text-center">
               <p>{error}</p>
-            </div>
-          )}
-          {success && (
-            <div className="text-green-500 text-center">
-              <p>{success}</p>
             </div>
           )}
           <div className="flex justify-center text-3xl">

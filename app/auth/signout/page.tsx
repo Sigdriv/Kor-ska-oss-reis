@@ -9,11 +9,6 @@ export default function SignOut() {
     handleSignOut();
   }, []);
 
-  // const handleSignOutVerify = async () => {
-  //   const response = await handleSignOut();
-  //   console.log(response);
-  // };
-
   return (
     <main className=" flex flex-col items-center justify-center min-h-screen ">
       <h1>Signing out...</h1>

@@ -44,6 +44,7 @@ model User {
   image         String?
   role          String?   @default("user")
   accounts      Account[]
+  paameltes     Paamelte[]
 }
 
 model Paamelte {
@@ -53,4 +54,6 @@ model Paamelte {
   teamName    String   @unique
   countParticipants Int
   createdAt   DateTime @default(now())
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
 }

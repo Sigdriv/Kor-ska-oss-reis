@@ -15,7 +15,6 @@ export default async function Dashboard() {
       <head>
         <title>Dashboard</title>
         <meta name="description" content="Dashboard" />
-        <link rel="icon" href="/favicon.ico" />
       </head>
       <main className=" min-h-screen ">
         <h1 className="text-center text-3xl p-4">

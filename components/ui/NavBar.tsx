@@ -1,6 +1,6 @@
 // "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { LogOut, Settings, User } from "lucide-react";
+import { HomeIcon, LogOut, Settings, User, UsersIcon } from "lucide-react";
 import Image from "next/image";
 import { auth } from "@/auth";
 
@@ -25,7 +25,6 @@ export default async function NavBar() {
         <Link href="/about">Om oss </Link>
         <Link href="/join">Bli med </Link>
         {!session ? <Link href="/auth/login">Login </Link> : null}
-        {/* <Link href="/auth/register">Register </Link> */}
       </div>
 
       {!!session ? (
@@ -50,6 +49,18 @@ export default async function NavBar() {
               <DropdownMenuLabel>Min konto</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
+                <Link href="/min-side">
+                  <DropdownMenuItem>
+                    <HomeIcon className="mr-2 h-4 w-4" />
+                    <span>Min side</span>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/min-side/dine-paamelte">
+                  <DropdownMenuItem>
+                    <UsersIcon className="mr-2 h-4 w-4" />
+                    <span>Mine lag</span>
+                  </DropdownMenuItem>
+                </Link>
                 <Link href="/dashboard/profile">
                   <DropdownMenuItem>
                     <User className="mr-2 h-4 w-4" />
