@@ -140,7 +140,15 @@ export const registerTeam = async (value: CreateTeamsValues) => {
 };
 
 export const getTeams = async () => {
-  return await db.paamelte.findMany();
+  return await db.paamelte.findMany({
+    include: {
+      createdBy: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
 };
 
 export const getTeamsCount = async () => {
@@ -173,7 +181,6 @@ export const getTeamById = async (id: string) => {
 
 export const updateTeam = async (value: UpdateTeamsValues) => {
   const { id, name, email, teamName, countParticipants } = value;
-
 
   // ToDo: needs to add existing team check when update team
   // const existingTeam = await db.paamelte.findFirst({

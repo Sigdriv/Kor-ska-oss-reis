@@ -21,7 +21,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default async function DinePaamelte({
+export default function DinePaamelte({
   teamName,
   countParticipants,
   id,

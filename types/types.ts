@@ -39,6 +39,7 @@ export interface Teams {
   email: string;
   teamName: string;
   countParticipants: string;
+  createdBy: { name: string };
 }
 
 export interface teamsByUser {
