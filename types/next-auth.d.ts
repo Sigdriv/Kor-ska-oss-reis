@@ -7,7 +7,7 @@
 //     name: string;
 //     email: string;
 //     image: string;
-//     role: number;
+//     role: string;
 //   }
 
 //   interface User {

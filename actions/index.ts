@@ -49,7 +49,7 @@ export const register = async (values: RegisterValue) => {
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields" };
+    return { error: "Ugyldige felt" };
   }
 
   const { email, password, name } = validatedFields.success
