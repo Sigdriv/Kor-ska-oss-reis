@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "@/auth";
 import Image from "next/image";
 import GooglePicture from "@/assets/google.png";
+import { toast } from "@/components/ui/use-toast";
 
 export default function SignUp() {
   const [error, setError] = useState<string | null>(null);
@@ -40,12 +41,22 @@ export default function SignUp() {
   const onSubmit = (values: RegisterValue) => {
     startTransition(async () => {
       const data = await register(values);
-      setError(data.error ?? null);
-      setSuccess(data.success ?? null);
 
       if (data.success) {
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        toast({
+          title: "Success",
+          description: data.success,
+          duration: 5000,
+        });
         router.push("/auth/login");
+      }
+      if (data.error) {
+        toast({
+          title: "Error",
+          description: data.error,
+          duration: 5000,
+          variant: "destructive",
+        });
       }
     });
   };
@@ -53,13 +64,13 @@ export default function SignUp() {
   return (
     <>
       <head>
-        <title>Register</title>
+        <title>Registrer</title>
         <meta name="Register" content="Register page" />
       </head>
       <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br text-white from-slate-900 to-slate-800">
         <Card className="text-white bg-slate-900 w-[400]">
           <CardHeader>
-            <CardTitle className="font-bold">Register</CardTitle>
+            <CardTitle className="font-bold">Registrer</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <Form {...form}>
@@ -73,7 +84,7 @@ export default function SignUp() {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>Navn</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -94,7 +105,7 @@ export default function SignUp() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>E-post</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -115,7 +126,7 @@ export default function SignUp() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>Passord</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -130,9 +141,6 @@ export default function SignUp() {
                     )}
                   />
                 </div>
-                {error && (
-                  <p className="text-red-500 rounded-lg p-2">{error}</p>
-                )}
                 {success && (
                   <p className="p-2 text-green-500 rounded-lg">{success}</p>
                 )}
@@ -140,7 +148,7 @@ export default function SignUp() {
                 <div className="flex gap-3">
                   <Link href="/auth/login">
                     <Button className="w-full" variant="outline">
-                      Already have an account?
+                      Har du allerede en konto?
                     </Button>
                   </Link>
                   <Button
@@ -149,14 +157,14 @@ export default function SignUp() {
                     type="submit"
                     disabled={isPending}
                   >
-                    Register
+                    Registrer
                   </Button>
                 </div>
               </form>
             </Form>
             <div className="flex flex-col items-center justify-center space-y-3">
               <div className="w-1/3"></div>
-              <p>or</p>
+              <p>eller</p>
               <hr className="w-1/3" />
               <Button onClick={() => signIn("google")} variant="secondary">
                 <Image
@@ -164,7 +172,7 @@ export default function SignUp() {
                   src={GooglePicture}
                   alt="Google"
                 />
-                Sign in with Google
+                Logg inn med Google
               </Button>
             </div>
           </CardContent>
