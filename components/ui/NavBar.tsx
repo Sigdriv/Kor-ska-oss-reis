@@ -1,6 +1,5 @@
-// "use client";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,10 +20,10 @@ export default async function NavBar() {
   return (
     <nav className="flex items-center justify-evenly w-screen text-white bg-slate-900 py-2">
       <div className="flex items-center justify-evenly w-screen">
-        <Link href="/">Home </Link>
+        <Link href="/">Hjem </Link>
         <Link href="/about">Om oss </Link>
         <Link href="/join">Bli med </Link>
-        {!session ? <Link href="/auth/login">Login </Link> : null}
+        {!session ? <Link href="/auth/login">Logg inn </Link> : null}
       </div>
 
       {!!session ? (

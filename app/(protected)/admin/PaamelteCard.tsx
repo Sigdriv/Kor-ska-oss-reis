@@ -24,7 +24,7 @@ export default async function PaamelteCard() {
           <p>{totalParticipantsTeams}</p>
         </CardContent>
         <CardFooter className=" flex items-center justify-center">
-          <Link href="/admin/pamelte">
+          <Link href="/admin/paamelte">
             <Button>Se alle påmelte lag</Button>
           </Link>
         </CardFooter>

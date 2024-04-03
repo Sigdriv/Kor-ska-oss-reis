@@ -21,10 +21,9 @@ import { LoginValue } from "@/types/types";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/ui/use-toast";
 
 export default function LogIn() {
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -44,25 +43,35 @@ export default function LogIn() {
       });
       if (result && result.error) {
         if (result.error === "CredentialsSignin") {
-          setError("Invalid credentials or user does not exist");
+          toast({
+            title: "Feil",
+            description: "Ugyldig legitimasjon eller bruker eksisterer ikke",
+            duration: 5000,
+            variant: "destructive",
+          });
         } else {
-          setError("An error occurred. Please try again.");
+          toast({
+            title: "Feil",
+            description: "En feil oppstod. Vennligst prøv igjen",
+            duration: 5000,
+            variant: "destructive",
+          });
         }
       } else {
-        // Redirect to the dashboard or the intended page
+        toast({
+          title: "Logget inn",
+          description: "Du er nå logget inn",
+          duration: 5000,
+          variant: "default",
+        });
         router.push("/min-side");
-        window.location.reload();
       }
     });
   };
 
   const handlerSignInProvider = (provider: string) => {
     startTransition(async () => {
-      const result = await signIn(provider);
-
-      // if (result === "") {
-
-      // }
+      await signIn(provider);
     });
   };
 
@@ -89,7 +98,7 @@ export default function LogIn() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>E-post</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -110,7 +119,7 @@ export default function LogIn() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>Passord</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -125,17 +134,10 @@ export default function LogIn() {
                     )}
                   />
                 </div>
-                {error && (
-                  <p className="text-red-500 rounded-lg p-2">{error}</p>
-                )}
-                {success && (
-                  <p className="p-2 text-green-500 rounded-lg">{success}</p>
-                )}
-
                 <div className="flex gap-3">
                   <Link href="/auth/register">
                     <Button className="w-full" variant="outline">
-                      Dont have an account?
+                      Har du ikke konto?
                     </Button>
                   </Link>
                   <Button
@@ -144,7 +146,7 @@ export default function LogIn() {
                     type="submit"
                     disabled={isPending}
                   >
-                    Sign in
+                    Logg inn
                   </Button>
                 </div>
               </form>
@@ -162,7 +164,7 @@ export default function LogIn() {
                   src={GooglePicture}
                   alt="Google"
                 />
-                Sign in with Google
+                Login inn med Google
               </Button>
             </div>
           </CardContent>

@@ -61,20 +61,6 @@ export function RegisterForm() {
     setLoading(false);
   }, []);
 
-  // const onSubmit = (value: CreateTeamsValues) => {
-  //   setError(null);
-  //   setSuccess(null);
-  //   startTransition(async () => {
-  //     const data = await registerTeam(value);
-  //     if (data?.error) setError(data.error);
-  //     if (data?.success) {
-  //       setSuccess(data.success);
-  //       await new Promise((resolve) => setTimeout(resolve, 3000));
-  //       routes.push("/min-side/dine-paamelte");
-  //     }
-  //   });
-  // };
-
   const onSubmit = (value: CreateTeamsValues) => {
     setError(null);
     setSuccess(null);
@@ -95,7 +81,6 @@ export function RegisterForm() {
           description: data.success,
           variant: "default",
         });
-        // await new Promise((resolve) => setTimeout(resolve, 3000));
         routes.push("/min-side/dine-paamelte");
       }
     });
@@ -180,11 +165,6 @@ export function RegisterForm() {
               </FormItem>
             )}
           />
-          {error && (
-            <div className="text-red-500 text-center">
-              <p>{error}</p>
-            </div>
-          )}
           <div className="flex justify-center text-3xl">
             <Button type="submit" disabled={isPending}>
               Meld på laget

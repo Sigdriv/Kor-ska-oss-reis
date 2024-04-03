@@ -36,30 +36,32 @@ export default async function Pamelte() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[200px]">Lagnavn</TableHead>
+              <TableHead>Antall deltagere</TableHead>
               <TableHead>Kontakt person</TableHead>
               <TableHead>Kontakt epost</TableHead>
-              <TableHead>Opprettet av</TableHead>
-              <TableHead className="text-right">Antall deltagere</TableHead>
+              <TableHead className="text-right">Opprettet av</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {teams.map((data: Teams) => (
               <TableRow key={data.id}>
                 <TableCell className="font-medium">{data.teamName}</TableCell>
-                <TableCell>{data.name}</TableCell>
-                <TableCell className="">
+                <TableCell>{data.countParticipants}</TableCell>
+                <TableCell className="">{data.name}</TableCell>
+                <TableCell>
                   <Link href={`mailto:${data.email}`}>{data.email}</Link>
                 </TableCell>
-                <TableCell>{data.createdBy.name}</TableCell>
                 <TableCell className="text-right">
-                  {data.countParticipants}
+                  {data.createdBy.name}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell colSpan={1}>Total</TableCell>
+              <TableCell className="">{totalParticipants}</TableCell>
+              <TableCell className="">{}</TableCell>
               <TableCell>
                 <Link
                   href={`mailto:${uniqueEmails}?subject=Info angående "Kor ska oss reis"`}
@@ -68,7 +70,6 @@ export default async function Pamelte() {
                 </Link>
               </TableCell>
               <TableCell className="">{}</TableCell>
-              <TableCell className="text-right">{totalParticipants}</TableCell>
             </TableRow>
           </TableFooter>
         </Table>
