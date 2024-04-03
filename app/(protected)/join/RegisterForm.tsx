@@ -24,8 +24,6 @@ import { toast } from "@/components/ui/use-toast";
 
 export function RegisterForm() {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const routes = useRouter();
 
@@ -56,18 +54,16 @@ export function RegisterForm() {
         "userEmail",
         getSession?.user?.email ? getSession.user?.email : ""
       );
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setLoading(false);
     };
     fetchUser();
-    setLoading(false);
   }, []);
 
   const onSubmit = (value: CreateTeamsValues) => {
-    setError(null);
-    setSuccess(null);
     startTransition(async () => {
       const data = await registerTeam(value);
       if (data?.error) {
-        setError(data.error);
         toast({
           title: "Error",
           description: data.error,
@@ -75,7 +71,6 @@ export function RegisterForm() {
         });
       }
       if (data?.success) {
-        setSuccess(data.success);
         toast({
           title: "Success",
           description: data.success,
