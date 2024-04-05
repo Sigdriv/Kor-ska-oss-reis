@@ -1,5 +1,5 @@
 import React from "react";
-import { ProfileForm } from "./profile";
+// import { ProfileForm } from "./profile";
 
 export default function page() {
   return (
@@ -10,7 +10,7 @@ export default function page() {
       </head>
       <main>
         <h1 className="mb-4 text-3xl">Profile</h1>
-        <ProfileForm />
+        {/* <ProfileForm /> */}
       </main>
     </>
   );

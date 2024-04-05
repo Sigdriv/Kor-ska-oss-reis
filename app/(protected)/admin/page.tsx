@@ -1,6 +1,6 @@
 import React from "react";
 import PaamelteCard from "./PaamelteCard";
-import SendEmailCard from "./SendEmailCard";
+// import SendEmailCard from "./SendEmailCard";
 
 export default function Admin() {
   return (
