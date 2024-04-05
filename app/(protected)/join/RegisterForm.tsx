@@ -34,7 +34,8 @@ export function RegisterForm() {
       email: "",
       teamName: "",
       countParticipants: "",
-      userEmail: "",
+      youngestParticipant: "",
+      oldestParticipant: "",
     },
   });
 
@@ -65,14 +66,14 @@ export function RegisterForm() {
       const data = await registerTeam(value);
       if (data?.error) {
         toast({
-          title: "Error",
+          title: "Feil",
           description: data.error,
           variant: "destructive",
         });
       }
       if (data?.success) {
         toast({
-          title: "Success",
+          title: "Lag opprettet",
           description: data.success,
           variant: "default",
         });
@@ -83,6 +84,7 @@ export function RegisterForm() {
 
   return loading ? (
     <div className=" flex flex-col justify-center items-center pt-10 text-2xl pb-24 gap-16">
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
       <Skeleton className="w-[400px] h-[40px] rounded-md" />
       <Skeleton className="w-[400px] h-[40px] rounded-md" />
       <Skeleton className="w-[400px] h-[40px] rounded-md" />
@@ -136,7 +138,7 @@ export function RegisterForm() {
             name="countParticipants"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Antall deltakere</FormLabel>
+                <FormLabel>Antall deltagere</FormLabel>
                 <FormControl>
                   <Input {...field} type="number" />
                 </FormControl>
@@ -145,6 +147,38 @@ export function RegisterForm() {
             )}
           />
           <FormField
+            control={form.control}
+            name="youngestParticipant"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Yngste deltager</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormDescription>
+                  Alderen på den yngste deltageren i laget
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="oldestParticipant"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Eldste deltager</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormDescription>
+                  Alderen på den eldste deltageren i laget
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* <FormField
             control={form.control}
             name="userEmail"
             render={({ field }) => (
@@ -159,7 +193,7 @@ export function RegisterForm() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <div className="flex justify-center text-3xl">
             <Button type="submit" disabled={isPending}>
               Meld på laget

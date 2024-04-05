@@ -44,7 +44,7 @@ export default function SignUp() {
 
       if (data.success) {
         toast({
-          title: "Success",
+          title: "Bruker opprettet",
           description: data.success,
           duration: 5000,
         });
@@ -52,7 +52,7 @@ export default function SignUp() {
       }
       if (data.error) {
         toast({
-          title: "Error",
+          title: "Feil",
           description: data.error,
           duration: 5000,
           variant: "destructive",

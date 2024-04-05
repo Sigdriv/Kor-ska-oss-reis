@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { updateTeam } from "@/actions";
 import { updateTeamsSchema } from "@/schemas";
 import { UpdateTeamsValues } from "@/types/types";
@@ -22,12 +22,18 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 
 export function UpdatePaamelte(
-  { id, name, email, teamName, countParticipants }: UpdateTeamsValues,
+  {
+    id,
+    name,
+    email,
+    teamName,
+    countParticipants,
+    youngestParticipant,
+    oldestParticipant,
+  }: UpdateTeamsValues,
   key: string
 ) {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const router = useRouter();
 
   const form = useForm<UpdateTeamsValues>({
@@ -38,6 +44,8 @@ export function UpdatePaamelte(
       email,
       teamName,
       countParticipants,
+      youngestParticipant,
+      oldestParticipant,
     },
   });
 
@@ -45,14 +53,12 @@ export function UpdatePaamelte(
     startTransition(async () => {
       const data = await updateTeam(value);
 
-      // ToDo: needs to add existing team check when update team
       if (data.success) {
         toast({
           title: "Lag oppdatert",
           description: data.success,
           variant: "default",
         });
-        // await new Promise((resolve) => setTimeout(resolve, 5000));
         router.push("/min-side/dine-paamelte");
       }
       if (data.error) {
@@ -65,8 +71,6 @@ export function UpdatePaamelte(
       }
     });
   };
-
-  const handleDeleteTeam = async () => {};
 
   return (
     <Form {...form}>
@@ -124,16 +128,32 @@ export function UpdatePaamelte(
               </FormItem>
             )}
           />
-          {error && (
-            <div className="text-red-500 text-center">
-              <p>{error}</p>
-            </div>
-          )}
-          {success && (
-            <div className="text-green-500 text-center">
-              <p>{success}</p>
-            </div>
-          )}
+          <FormField
+            control={form.control}
+            name="youngestParticipant"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Yngste deltager</FormLabel>
+                <FormControl>
+                  <Input {...field} type="number" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="oldestParticipant"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Eldste deltakere</FormLabel>
+                <FormControl>
+                  <Input {...field} type="number" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="flex justify-center text-3xl">
             <Button type="submit" disabled={isPending}>
               Oppdater laget

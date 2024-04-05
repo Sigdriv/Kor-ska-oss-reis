@@ -37,8 +37,11 @@ export interface Teams {
   id: string;
   name: string;
   email: string;
-  teamName: string;
+  userEmail: string;
   countParticipants: string;
+  youngestParticipant: string;
+  oldestParticipant: string;
+  teamName: string;
   createdBy: { name: string };
 }
 

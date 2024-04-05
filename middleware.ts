@@ -15,8 +15,6 @@ const { auth } = NextAuth(authConfig);
 export default auth(async (req) => {
   const { nextUrl } = req;
 
-  // console.log(req.auth?.role);
-
   const isLoggedIn = !!req.auth;
   // const userRole = async (req: any) => {
   //   if (isLoggedIn) {

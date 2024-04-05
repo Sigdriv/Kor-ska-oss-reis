@@ -22,17 +22,6 @@ export const profileFormSchema = z.object({
       required_error: "Venligst skriv inn en e-postadresse.",
     })
     .email(),
-  teamName: z.string().min(2, {
-    message: "Venligst skriv inn et lagnavn.",
-  }),
-  countParticipants: z
-    .string()
-    .min(1, {
-      message: "Venligst skriv inn antall deltakere.",
-    })
-    .refine((data) => parseInt(data) > 0, {
-      message: "Antall deltakere må være større enn 0.",
-    }),
 });
 
 export const createTeamsSchema = z.object({
@@ -47,15 +36,21 @@ export const createTeamsSchema = z.object({
   teamName: z.string().min(2, {
     message: "Venligst skriv inn et lagnavn.",
   }),
+  userEmail: z.string().email(),
   countParticipants: z
     .string()
     .min(1, {
-      message: "Venligst skriv inn antall deltakere.",
+      message: "Venligst skriv inn antall deltagere dere er i laget.",
     })
-    .refine((data) => parseInt(data) > 0, {
-      message: "Antall deltakere må være større enn 0.",
+    .refine((value) => Number(value) >= 0, {
+      message: "Antall deltakere kan ikke være under 0",
     }),
-  userEmail: z.string().email(),
+  youngestParticipant: z.string().min(1, {
+    message: "Venligst skriv inn en alder på den yngste.",
+  }),
+  oldestParticipant: z.string().min(1, {
+    message: "Venligst skriv inn en alder på den eldste.",
+  }),
 });
 
 export const updateTeamsSchema = z.object({
@@ -74,9 +69,15 @@ export const updateTeamsSchema = z.object({
   countParticipants: z
     .string()
     .min(1, {
-      message: "Venligst skriv inn antall deltakere.",
+      message: "Venligst skriv inn antall deltagere dere er i laget.",
     })
-    .refine((data) => parseInt(data) > 0, {
-      message: "Antall deltakere må være større enn 0.",
+    .refine((value) => Number(value) >= 0, {
+      message: "Antall deltakere kan ikke være under 0",
     }),
+  youngestParticipant: z.string().min(1, {
+    message: "Venligst skriv inn en alder på den yngste.",
+  }),
+  oldestParticipant: z.string().min(1, {
+    message: "Venligst skriv inn en alder på den eldste.",
+  }),
 });

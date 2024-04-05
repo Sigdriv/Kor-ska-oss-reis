@@ -28,8 +28,8 @@ export interface props {
 
 export default function DinePaamelte({
   teamName,
-  countParticipants,
   id,
+  countParticipants,
   setDeleted,
 }: teamsByUser & props) {
   const handleDeleteTeam = async () => {

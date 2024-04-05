@@ -17,7 +17,7 @@ export default async function Pamelte() {
   const teams = await getTeams();
 
   const totalParticipants = teams.reduce(
-    (total: number, team: Teams) => total + team.countParticipants,
+    (total: number, team: Teams) => total + parseInt(team.countParticipants),
     0
   );
 
@@ -35,7 +35,8 @@ export default async function Pamelte() {
           <TableCaption>Liste over årets påmelte lag</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[200px]">Lagnavn</TableHead>
+              <TableHead className="w-[250px]">Lagnavn</TableHead>
+              <TableHead>Alder</TableHead>
               <TableHead>Antall deltagere</TableHead>
               <TableHead>Kontakt person</TableHead>
               <TableHead>Kontakt epost</TableHead>
@@ -46,6 +47,9 @@ export default async function Pamelte() {
             {teams.map((data: Teams) => (
               <TableRow key={data.id}>
                 <TableCell className="font-medium">{data.teamName}</TableCell>
+                <TableCell>
+                  {data.youngestParticipant} – {data.oldestParticipant}
+                </TableCell>
                 <TableCell>{data.countParticipants}</TableCell>
                 <TableCell className="">{data.name}</TableCell>
                 <TableCell>
@@ -60,6 +64,7 @@ export default async function Pamelte() {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={1}>Total</TableCell>
+              <TableCell className="">{}</TableCell>
               <TableCell className="">{totalParticipants}</TableCell>
               <TableCell className="">{}</TableCell>
               <TableCell>

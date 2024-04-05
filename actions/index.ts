@@ -88,9 +88,17 @@ export const getUser = async () => {
 };
 
 export const registerTeam = async (value: CreateTeamsValues) => {
-  const { name, email, teamName, countParticipants, userEmail } = value;
+  const {
+    name,
+    email,
+    countParticipants,
+    youngestParticipant,
+    oldestParticipant,
+    teamName,
+    userEmail,
+  } = value;
 
-  const existingTeam = await db.paamelte.findFirst({
+  const existingTeam = await db.team.findFirst({
     where: {
       teamName: {
         equals: teamName,
@@ -112,16 +120,20 @@ export const registerTeam = async (value: CreateTeamsValues) => {
     });
 
     if (!user) {
-      return { error: "User not found" };
+      return {
+        error: "Bruker ikke funnet, venligst logg inn igjen og prøv på nytt",
+      };
     }
 
-    // Create paamelte associated with the user
-    await db.paamelte.create({
+    // Create team associated with the user
+    await db.team.create({
       data: {
         name,
         email,
+        countParticipants,
+        youngestParticipant,
+        oldestParticipant,
         teamName,
-        countParticipants: parseInt(countParticipants),
         createdBy: {
           connect: {
             id: user.id,
@@ -130,9 +142,17 @@ export const registerTeam = async (value: CreateTeamsValues) => {
       },
     });
 
-    return { success: `Lag ved navn "${teamName}" registrert` };
+    const team = await db.team.findFirst({
+      where: {
+        teamName: {
+          equals: teamName,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    return { success: `Lag ved navn "${teamName}" registrert`, id: team.id };
   } catch (error) {
-    console.error(error);
     return {
       error: "En feil oppsto under oppretting av lag, venligst prøv igjen",
     };
@@ -140,7 +160,7 @@ export const registerTeam = async (value: CreateTeamsValues) => {
 };
 
 export const getTeams = async () => {
-  return await db.paamelte.findMany({
+  return await db.team.findMany({
     include: {
       createdBy: {
         select: {
@@ -152,7 +172,7 @@ export const getTeams = async () => {
 };
 
 export const getTeamsCount = async () => {
-  return await db.paamelte.count();
+  return await db.team.count();
 };
 
 export const getTeamsByUser = async (email: string) => {
@@ -162,7 +182,7 @@ export const getTeamsByUser = async (email: string) => {
     },
   });
 
-  return await db.paamelte.findMany({
+  return await db.team.findMany({
     where: {
       createdBy: {
         id: user.id,
@@ -175,7 +195,7 @@ export const getTeamsByUser = async (email: string) => {
 };
 
 export const getTeamById = async (id: string) => {
-  return await db.paamelte.findUnique({
+  return await db.team.findUnique({
     where: {
       id,
     },
@@ -183,16 +203,24 @@ export const getTeamById = async (id: string) => {
 };
 
 export const updateTeam = async (value: UpdateTeamsValues) => {
-  const { id, name, email, teamName, countParticipants } = value;
+  const {
+    id,
+    name,
+    email,
+    teamName,
+    countParticipants,
+    youngestParticipant,
+    oldestParticipant,
+  } = value;
 
-  const existingTeam = await db.paamelte.findUnique({
+  const existingTeam = await db.team.findUnique({
     where: {
       id,
     },
   });
 
   if (existingTeam.teamName !== teamName) {
-    const teamWithNewName = await db.paamelte.findFirst({
+    const teamWithNewName = await db.team.findFirst({
       where: {
         teamName: {
           equals: teamName,
@@ -206,7 +234,7 @@ export const updateTeam = async (value: UpdateTeamsValues) => {
     }
   }
 
-  await db.paamelte.update({
+  await db.team.update({
     where: {
       id,
     },
@@ -214,7 +242,9 @@ export const updateTeam = async (value: UpdateTeamsValues) => {
       name,
       email,
       teamName,
-      countParticipants: parseInt(countParticipants),
+      countParticipants,
+      youngestParticipant,
+      oldestParticipant,
     },
   });
 
@@ -222,13 +252,13 @@ export const updateTeam = async (value: UpdateTeamsValues) => {
 };
 
 export const deleteTeam = async (id: string) => {
-  const team = await db.paamelte.findUnique({
+  const team = await db.team.findUnique({
     where: {
       id,
     },
   });
   try {
-    await db.paamelte.delete({
+    await db.team.delete({
       where: {
         id,
       },

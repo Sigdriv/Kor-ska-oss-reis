@@ -45,8 +45,6 @@ export default async function NavBar() {
               )}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>Min konto</DropdownMenuLabel>
-              <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <Link href="/min-side">
                   <DropdownMenuItem>
@@ -60,17 +58,15 @@ export default async function NavBar() {
                     <span>Mine lag</span>
                   </DropdownMenuItem>
                 </Link>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
                 <Link href="/dashboard/profile">
                   <DropdownMenuItem>
                     <User className="mr-2 h-4 w-4" />
                     <span>Profil</span>
                   </DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Innstillinger</span>
-                  <DropdownMenuShortcut>⌘,</DropdownMenuShortcut>
-                </DropdownMenuItem>
               </DropdownMenuGroup>
 
               <DropdownMenuSeparator />
