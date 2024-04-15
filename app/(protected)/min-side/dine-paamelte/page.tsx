@@ -10,6 +10,7 @@ export default function Dine_Pamelte() {
   const [temasByUser, setTemasByUser] = useState<teamsByUser[]>();
   const [isPending, startTransition] = useTransition();
   const [deleted, setDeleted] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +22,7 @@ export default function Dine_Pamelte() {
             setTemasByUser(data);
           }
         } catch (error) {
+          setError(true);
           toast({
             title: "Feil",
             description:
@@ -44,9 +46,17 @@ export default function Dine_Pamelte() {
             <Skeleton className="w-[300px] h-[200px] rounded-md" />
           </div>
         ) : !temasByUser?.length ? (
-          <div className=" text-xl">
-            <h1>Du har ingen påmeldte lag</h1>
-          </div>
+          !error ? (
+            <div className=" text-xl">
+              <h1>Du har ingen påmeldte lag</h1>
+            </div>
+          ) : (
+            <div>
+              <h1 className=" text-red-700 text-xl">
+                En feil oppsto under henting av lag <br /> Vennligst prøv igjen
+              </h1>
+            </div>
+          )
         ) : (
           temasByUser.map((team: teamsByUser) => (
             <DinePaamelte {...team} setDeleted={setDeleted} key={team.id} />

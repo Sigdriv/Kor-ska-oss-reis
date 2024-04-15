@@ -1,12 +1,10 @@
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import GitHub from "next-auth/providers/github";
 import bcrypt from "bcryptjs";
 
 import type { NextAuthConfig } from "next-auth";
 import { LoginSchema } from "./schemas";
 import { getUserByEmail } from "./data/user";
-import discord from "next-auth/providers/discord";
 
 export default {
   providers: [
@@ -32,16 +30,6 @@ export default {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      allowDangerousEmailAccountLinking: true,
-    }),
-    GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      allowDangerousEmailAccountLinking: true,
-    }),
-    discord({
-      clientId: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true,
     }),
   ],

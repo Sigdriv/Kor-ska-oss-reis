@@ -58,13 +58,7 @@ export default function LogIn() {
           });
         }
       } else {
-        toast({
-          title: "Logget inn",
-          description: "Du er nå logget inn",
-          duration: 5000,
-          variant: "default",
-        });
-        router.push("/min-side");
+        window.location.href = "/min-side";
       }
     });
   };
@@ -82,7 +76,7 @@ export default function LogIn() {
         <meta name="description" content="Login page" />
       </head>
       <main className="flex flex-col items-center justify-center min-h-screen ">
-        <Card className="text-white bg-slate-900 w-[400]">
+        <Card className=" bg-slate-200 w-[400]">
           <CardHeader>
             <CardTitle className="font-bold">Login</CardTitle>
           </CardHeader>
@@ -153,7 +147,7 @@ export default function LogIn() {
             </Form>
             <div className="flex flex-col items-center justify-center space-y-3">
               <div className="w-1/3"></div>
-              <p>or</p>
+              <p>eller</p>
               <hr className="w-1/3" />
               <Button
                 onClick={() => handlerSignInProvider("google")}

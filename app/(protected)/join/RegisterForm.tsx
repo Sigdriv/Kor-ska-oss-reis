@@ -63,21 +63,30 @@ export function RegisterForm() {
 
   const onSubmit = (value: CreateTeamsValues) => {
     startTransition(async () => {
-      const data = await registerTeam(value);
-      if (data?.error) {
+      try {
+        const data = await registerTeam(value);
+        if (data?.error) {
+          toast({
+            title: "Feil",
+            description: data.error,
+            variant: "destructive",
+          });
+        }
+        if (data?.success) {
+          toast({
+            title: "Lag opprettet",
+            description: data.success,
+            variant: "default",
+          });
+          routes.push("/min-side/dine-paamelte");
+        }
+      } catch (error) {
         toast({
           title: "Feil",
-          description: data.error,
+          description:
+            "En feil oppstod under oppretting av lag, vennligst prøv igjen senere",
           variant: "destructive",
         });
-      }
-      if (data?.success) {
-        toast({
-          title: "Lag opprettet",
-          description: data.success,
-          variant: "default",
-        });
-        routes.push("/min-side/dine-paamelte");
       }
     });
   };

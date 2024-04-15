@@ -4,7 +4,6 @@ import "./globals.css";
 import Footer from "@/components/ui/footer";
 import NavBar from "../components/ui/NavBar";
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,20 +22,14 @@ export default function RootLayout({
     <SessionProvider>
       <html lang="en">
         <body className={inter.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NavBar />
-            <main className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
-              {/* <main className="min-h-screen bg-gradient-to-br from-green to-yellow"> */}
-              {children}
-            </main>
-            <Toaster />
-            <Footer />
-          </ThemeProvider>
+          <NavBar />
+          {/* <main className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800"> */}
+          <main className="min-h-screen">
+            {/* <main className="min-h-screen bg-gradient-to-br from-green to-yellow"> */}
+            {children}
+          </main>
+          <Toaster />
+          <Footer />
         </body>
       </html>
     </SessionProvider>

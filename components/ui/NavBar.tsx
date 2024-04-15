@@ -18,7 +18,7 @@ export default async function NavBar() {
   const session = await auth();
 
   return (
-    <nav className="flex items-center justify-evenly w-screen text-white bg-slate-900 py-2">
+    <nav className="flex items-center justify-evenly w-screen bg-slate-200 py-2">
       <div className="flex items-center justify-evenly w-screen">
         <Link href="/">Hjem </Link>
         <Link href="/about">Om oss </Link>

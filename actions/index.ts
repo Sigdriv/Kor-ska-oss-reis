@@ -17,7 +17,7 @@ export const login = async (values: LoginValue) => {
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields) {
-    return { error: "Invalid fields" };
+    return { error: "Ugyldige felt" };
   }
 
   const { email, password } = validatedFields.success
@@ -34,10 +34,10 @@ export const login = async (values: LoginValue) => {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin": {
-          return { error: "Invalid credentials" };
+          return { error: "Ugyldige inndata" };
         }
         default: {
-          return { error: "Something went wrong" };
+          return { error: "Noew gikk feil, venligst prøv igjen" };
         }
       }
     }
@@ -248,7 +248,7 @@ export const updateTeam = async (value: UpdateTeamsValues) => {
     },
   });
 
-  return { success: "Lag oppdatert!" };
+  return { success: `Lag ved navn: "${teamName}" er oppdatert!` };
 };
 
 export const deleteTeam = async (id: string) => {

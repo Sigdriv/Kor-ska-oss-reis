@@ -67,8 +67,8 @@ export default function SignUp() {
         <title>Registrer</title>
         <meta name="Register" content="Register page" />
       </head>
-      <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br text-white from-slate-900 to-slate-800">
-        <Card className="text-white bg-slate-900 w-[400]">
+      <main className="flex flex-col items-center justify-center min-h-screen ">
+        <Card className=" bg-slate-200 w-[400]">
           <CardHeader>
             <CardTitle className="font-bold">Registrer</CardTitle>
           </CardHeader>
