@@ -37,7 +37,7 @@ export default function Home() {
                 Meld deg på
               </button>
             </Link>
-            <Link href="/about">
+            <Link href="/om-oss">
               <button className="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded ml-2">
                 Les mer
               </button>

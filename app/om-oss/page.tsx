@@ -3,13 +3,13 @@ import React from "react";
 export default function AboutUs() {
   return (
     <>
-    <head>
+      <head>
         <title>Om oss</title>
         <meta name="description" content="Om oss" />
-    </head>
-    <div>
-      <h1>Om oss</h1>
-    </div>
+      </head>
+      <div>
+        <h1>Om oss</h1>
+      </div>
     </>
   );
 }

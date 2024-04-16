@@ -21,9 +21,9 @@ export default async function NavBar() {
     <nav className="flex items-center justify-evenly w-screen bg-slate-200 py-2">
       <div className="flex items-center justify-evenly w-screen">
         <Link href="/">Hjem </Link>
-        <Link href="/about">Om oss </Link>
+        <Link href="/om-oss">Om oss </Link>
         <Link href="/join">Bli med </Link>
-        {!session ? <Link href="/auth/login">Logg inn </Link> : null}
+        {!session ? <Link href="/auth/logginn">Logg inn </Link> : null}
       </div>
 
       {!!session ? (
@@ -71,7 +71,7 @@ export default async function NavBar() {
 
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <Link href="/auth/signout">
+                <Link href="/auth/loggut">
                   <DropdownMenuItem>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Logg ut</span>

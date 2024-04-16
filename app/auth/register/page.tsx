@@ -48,7 +48,7 @@ export default function SignUp() {
           description: data.success,
           duration: 5000,
         });
-        router.push("/auth/login");
+        router.push("/auth/logginn");
       }
       if (data.error) {
         toast({
@@ -146,7 +146,7 @@ export default function SignUp() {
                 )}
 
                 <div className="flex gap-3">
-                  <Link href="/auth/login">
+                  <Link href="/auth/logginn">
                     <Button className="w-full" variant="outline">
                       Har du allerede en konto?
                     </Button>

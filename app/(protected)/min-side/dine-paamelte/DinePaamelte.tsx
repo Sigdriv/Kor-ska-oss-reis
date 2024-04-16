@@ -67,7 +67,7 @@ export default function DinePaamelte({
           <p>{countParticipants}</p>
         </CardContent>
         <CardFooter className=" flex items-center justify-center gap-3">
-          <Link href={`/min-side/dine-paamelte/edit-team/${id}`}>
+          <Link href={`/min-side/dine-paamelte/rediger-lag/${id}`}>
             <Button>Endre påmelding</Button>
           </Link>
           <Dialog>

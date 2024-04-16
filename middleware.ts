@@ -46,7 +46,7 @@ export default auth(async (req) => {
   // if (isAminRoute) return Response.redirect(new URL("/admin", nextUrl));
 
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("auth/login", nextUrl.origin));
+    return Response.redirect(new URL("auth/logginn", nextUrl.origin));
   }
   return;
 });

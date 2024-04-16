@@ -72,13 +72,13 @@ export default function LogIn() {
   return (
     <>
       <head>
-        <title>Login</title>
-        <meta name="description" content="Login page" />
+        <title>Logg inn</title>
+        <meta name="description" content="Logg inn" />
       </head>
       <main className="flex flex-col items-center justify-center min-h-screen ">
         <Card className=" bg-slate-200 w-[400]">
           <CardHeader>
-            <CardTitle className="font-bold">Login</CardTitle>
+            <CardTitle className="font-bold">Logg inn</CardTitle>
           </CardHeader>
           <CardContent>
             <Form {...form}>
