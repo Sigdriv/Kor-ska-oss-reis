@@ -60,7 +60,7 @@ export function ProfileForm() {
 
   function onSubmit(data: ProfileFormValues) {
     toast({
-      title: "You submitted the following values:",
+      title: "Du har oppdatert profilen din med følgende data:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
@@ -136,7 +136,7 @@ export function ProfileForm() {
             Add URL
           </Button>
         </div> */}
-        <Button type="submit">Update profile</Button>
+        <Button type="submit">Oppdater profil</Button>
       </form>
     </Form>
   );

@@ -38,31 +38,33 @@ export default function Dine_Pamelte() {
   return (
     <main className="w-screen p-20 text-2xl">
       <h1>Dine lag:</h1>
-      <div className=" grid grid-cols-3">
-        {!!isPending || deleted ? (
-          <div className="w-screen grid grid-cols-3 pt-20 text-2xl pb-24 ">
-            <Skeleton className="w-[300px] h-[200px] rounded-md" />
-            <Skeleton className="w-[300px] h-[200px] rounded-md" />
-            <Skeleton className="w-[300px] h-[200px] rounded-md" />
+      {!!isPending || deleted ? (
+        <div className=" grid grid-cols-3">
+          <div className="w-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pt-20 text-2xl pb-24 gap-16">
+            <Skeleton className="w-[250px] h-[200px] sm:w-[200px] md:w-[300px] rounded-md" />
+            <Skeleton className="w-[250px] h-[200px] sm:w-[200px] md:w-[300px] rounded-md" />
+            <Skeleton className="w-[250px] h-[200px] sm:w-[200px] md:w-[300px] rounded-md" />
           </div>
-        ) : !temasByUser?.length ? (
-          !error ? (
-            <div className=" text-xl">
-              <h1>Du har ingen påmeldte lag</h1>
-            </div>
-          ) : (
-            <div>
-              <h1 className=" text-red-700 text-xl">
-                En feil oppsto under henting av lag <br /> Vennligst prøv igjen
-              </h1>
-            </div>
-          )
+        </div>
+      ) : !temasByUser?.length ? (
+        !error ? (
+          <div className=" text-xl">
+            <h1>Du har ingen påmeldte lag</h1>
+          </div>
         ) : (
-          temasByUser.map((team: teamsByUser) => (
+          <div>
+            <h1 className=" text-red-700 text-xl">
+              En feil oppsto under henting av lag <br /> Vennligst prøv igjen
+            </h1>
+          </div>
+        )
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+          {temasByUser.map((team: teamsByUser) => (
             <DinePaamelte {...team} setDeleted={setDeleted} key={team.id} />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 }

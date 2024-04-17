@@ -15,7 +15,7 @@ export default function Join() {
         <div className="flex justify-center pt-4 text-2xl">
           <h1>Meld på ditt lag under</h1>
         </div>
-        <div className=" p-24">
+        <div className=" pt-20 pb-20 ">
           <RegisterForm />
         </div>
       </main>
