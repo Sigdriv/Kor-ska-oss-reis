@@ -63,3 +63,4 @@ export type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export type CreateTeamsValues = z.infer<typeof createTeamsSchema>;
 export type UpdateTeamsValues = z.infer<typeof updateTeamsSchema>;
+export type UpdateProfile = z.infer<typeof profileFormSchema>;

@@ -4,6 +4,7 @@ import {
   CreateTeamsValues,
   LoginValue,
   RegisterValue,
+  UpdateProfile,
   UpdateTeamsValues,
 } from "@/types/types";
 import { LoginSchema, RegisterSchema } from "@/schemas";
@@ -82,6 +83,7 @@ export const register = async (values: RegisterValue) => {
 export const handleSignOut = async () => {
   return await signOut();
 };
+
 export const getUser = async () => {
   const session = await auth();
   return session;
@@ -270,4 +272,51 @@ export const deleteTeam = async (id: string) => {
     status: 200,
     message: `Lag ved navn "${team.teamName}" er slettet!`,
   };
+};
+
+export const updateProfile = async (values: UpdateProfile) => {
+  const { id, name, email } = values;
+
+  const existingEmail = await db.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (existingEmail.teamName !== email) {
+    const emailWithNewEmail = await db.user.findFirst({
+      where: {
+        email: {
+          equals: email,
+          mode: "insensitive", // This makes the comparison case-insensitive
+        },
+      },
+    });
+
+    if (emailWithNewEmail) {
+      return { error: "Epost er allerede i bruk!" };
+    }
+  }
+
+  await db.user.update({
+    where: {
+      id,
+    },
+    data: {
+      name,
+      email,
+    },
+  });
+
+  return {
+    success: `Profil oppdatert med følgende data: \nNavn: "${name}" \nEpost: "${email}"`,
+  };
+};
+
+export const getIdFromEmail = async (email: string) => {
+  return await db.user.findUnique({
+    where: {
+      email,
+    },
+  });
 };

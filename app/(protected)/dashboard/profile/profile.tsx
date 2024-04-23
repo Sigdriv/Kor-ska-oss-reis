@@ -25,18 +25,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useEffect, useState } from "react";
-import { getUser } from "@/actions";
+import { useEffect, useState, useTransition } from "react";
+import { getIdFromEmail, getUser, updateProfile } from "@/actions";
 import { profileFormSchema } from "@/schemas";
-
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
+import { UpdateProfile } from "@/types/types";
 
 export function ProfileForm() {
   const [underDevelopment] = useState(false);
+  const [isPending, startTransistion] = useTransition();
 
-  const form = useForm<ProfileFormValues>({
+  const form = useForm<UpdateProfile>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
+      id: "",
       name: "",
       email: "",
     },
@@ -46,26 +47,32 @@ export function ProfileForm() {
     const fetchUser = async () => {
       const getSession = await getUser();
 
-      form.setValue(
-        "name",
-        getSession?.user?.name ? getSession.user?.name : ""
-      );
-      form.setValue(
-        "email",
-        getSession?.user?.email ? getSession.user?.email : ""
-      );
+      const user = await getIdFromEmail(getSession?.user?.email ?? "");
+
+      form.setValue("id", user.id ?? "");
+      form.setValue("name", user.name ?? "");
+      form.setValue("email", user.email ?? "");
     };
     fetchUser();
   }, []);
 
-  function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "Du har oppdatert profilen din med følgende data:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+  function onSubmit(data: UpdateProfile) {
+    startTransistion(async () => {
+      const response = await updateProfile(data);
+      if (response.success) {
+        toast({
+          title: "Profilen din er oppdatert",
+          description: response.success,
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Noe gikk galt",
+          description:
+            "En feil oppstod under oppdatering av profilen, venligst prøv igjen senere",
+          variant: "destructive",
+        });
+      }
     });
   }
 
@@ -104,38 +111,6 @@ export function ProfileForm() {
             </FormItem>
           )}
         />
-        {/* <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && "sr-only")}>
-                    URLs
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && "sr-only")}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2"
-            onClick={() => append({ value: "" })}
-          >
-            Add URL
-          </Button>
-        </div> */}
         <Button type="submit">Oppdater profil</Button>
       </form>
     </Form>
