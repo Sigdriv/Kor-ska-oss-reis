@@ -22,7 +22,7 @@ export default async function NavBar() {
       <div className="flex items-center justify-evenly w-screen">
         <Link href="/">Hjem </Link>
         <Link href="/om-oss">Om oss </Link>
-        <Link href="/join">Bli med </Link>
+        <Link href="/bli-med">Bli med </Link>
         {!session ? <Link href="/auth/logginn">Logg inn </Link> : null}
       </div>
 

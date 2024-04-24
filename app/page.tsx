@@ -32,7 +32,7 @@ export default function Home() {
         <div className=" mt-5">
           <h1 className="text-2xl">Vil du være med på den neste reisen?</h1>
           <div className="mt-2 flex items-center justify-center">
-            <Link href="/join">
+            <Link href="/bli-med">
               <button className="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
                 Meld deg på
               </button>
