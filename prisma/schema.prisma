@@ -45,6 +45,7 @@ model User {
   role          String?   @default("user")
   accounts      Account[]
   teams         Team[]
+  resetPassword ResetPassword[]
 }
 
 model Team {
@@ -58,4 +59,13 @@ model Team {
   createdAt   DateTime @default(now())
   createdBy   User     @relation(fields: [createdById], references: [id])
   createdById String
+}
+
+model ResetPassword {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expires   DateTime
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }

@@ -3,6 +3,7 @@
  * These routes do not require authentication.
  * @type {string[]}
  */
+
 export const publicRoutes = ["/", "/om-oss", "/kontakt-oss"];
 
 /**
@@ -10,7 +11,11 @@ export const publicRoutes = ["/", "/om-oss", "/kontakt-oss"];
  * These routes will redirect logged in users to /dashboard.
  * @type {string[]}
  */
-export const authRoutes = ["/auth/logginn", "/auth/register"];
+export const authRoutes = [
+  "/auth/logginn",
+  "/auth/register",
+  "/auth/glemt-passord",
+];
 
 /**
  * The prefix for API authentication routes.

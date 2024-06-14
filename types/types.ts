@@ -17,6 +17,16 @@ export type RegisterValue = {
   password: string;
 };
 
+export type ForgotPasswordValue = {
+  email: string;
+};
+
+export type ResetPassword = {
+  token: string | undefined;
+  password: string;
+  repeatPassword: string;
+};
+
 export type UpdateProfileValue = {
   expires: string | undefined;
   name?: string | null | undefined;

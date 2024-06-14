@@ -8,7 +8,7 @@ import {
 } from "@/routes";
 
 import authConfig from "./auth.config";
-import { db } from "./lib/db";
+// import { db } from "./lib/db";
 
 const { auth } = NextAuth(authConfig);
 
@@ -29,7 +29,9 @@ export default auth(async (req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isAminRoute = nextUrl.pathname.startsWith("/admin");
+  // const isAminRoute = nextUrl.pathname.startsWith("/admin");
+
+  if (nextUrl.pathname.startsWith("/auth/reset-password")) return;
 
   if (isApiAuthRoute) {
     return;

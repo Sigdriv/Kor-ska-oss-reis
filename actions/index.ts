@@ -2,8 +2,10 @@
 
 import {
   CreateTeamsValues,
+  ForgotPasswordValue,
   LoginValue,
   RegisterValue,
+  ResetPassword,
   UpdateProfile,
   UpdateTeamsValues,
 } from "@/types/types";
@@ -13,6 +15,8 @@ import { db } from "@/lib/db";
 import { auth, signIn, signOut } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
+import { Resend } from "resend";
+import Email from "@/components/ui/Email";
 
 export const login = async (values: LoginValue) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -80,8 +84,135 @@ export const register = async (values: RegisterValue) => {
   return { success: "Bruker opprettet" };
 };
 
+export const forgotPassword = async (values: ForgotPasswordValue) => {
+  const { email } = values;
+  const resend = new Resend(process.env.RESEND_API_KEY_RESET_PASSWORD);
+
+  const user = await db.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    return {
+      error: "Bruker ikke funnet",
+      description: "Venligst sjekk at eposten er skrevet inn rett",
+    };
+  }
+
+  const alreadyRequested = await db.resetPassword.findFirst({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  if (alreadyRequested) {
+    await db.resetPassword.delete({
+      where: {
+        id: alreadyRequested.id,
+      },
+    });
+  }
+
+  await db.resetPassword.create({
+    data: {
+      expires: new Date(Date.now() + 15 * 60 * 1000),
+      token: (
+        Math.random().toString(36).substring(2) +
+        Math.random().toString(36).substring(2)
+      ).substring(0, 30),
+      userId: user.id,
+    },
+  });
+
+  const getToken = await db.resetPassword.findFirst({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  try {
+    await resend.emails.send({
+      from: "Kor ska oss reis <onboarding@resend.dev>",
+      to: email,
+      subject: "Tilbakestill passord",
+      react: Email({ Token: getToken.token }),
+    });
+  } catch (error) {
+    console.log(error);
+    return {
+      error: "Epost kunne ikke sendes",
+      description: "Venligst prøv igjen",
+    };
+  }
+
+  return {
+    success: "Epost sendt",
+    description: "Epost med instruksjoner er sendt",
+  };
+};
+
+export const resetPassword = async (values: ResetPassword) => {
+  const { password, token } = values;
+
+  const resetPasswordUser = await db.resetPassword.findFirst({
+    where: {
+      token,
+    },
+  });
+
+  if (!resetPasswordUser) {
+    return {
+      error: "Ugyldig token",
+      description: "Venligst prøv igjen",
+    };
+  }
+
+  const now = new Date();
+  if (resetPasswordUser.expires < now) {
+    await db.resetPassword.delete({
+      where: {
+        id: resetPasswordUser.id,
+      },
+    });
+
+    return {
+      error: "Token er utløpt",
+      description: "Venligst be om nytt passordreset",
+    };
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  await db.user.update({
+    where: {
+      id: resetPasswordUser.userId,
+    },
+    data: {
+      password: hashedPassword,
+    },
+  });
+
+  await db.resetPassword.delete({
+    where: {
+      id: resetPasswordUser.id,
+    },
+  });
+
+  return {
+    success: "Passord endret",
+    description: "Passordet ditt er endret",
+  };
+};
+
 export const handleSignOut = async () => {
-  return await signOut();
+  await signOut();
+
+  return {
+    success: "Du er logget ut",
+    description: "Du er logget ut",
+  };
 };
 
 export const getUser = async () => {

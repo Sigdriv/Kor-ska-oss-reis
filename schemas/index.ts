@@ -13,6 +13,24 @@ export const RegisterSchema = z.object({
     .min(6, { message: "Passord må være mer enn 6 karakterer" }),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().email(),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    password: z.string().min(6, {
+      message: "Passord må være mer enn 6 karakterer",
+    }),
+    repeatPassword: z.string().min(6, {
+      message: "Passord må være mer enn 6 karakterer",
+    }),
+  })
+  .refine((data) => data.password === data.repeatPassword, {
+    message: "Passordene må være like",
+    path: ["repeatPassword"], // Error will be reported on repeatPassword
+  });
+
 export const profileFormSchema = z.object({
   id: z.string(),
   name: z.string().min(2, {
