@@ -15,7 +15,7 @@ export default function TeamEditPage() {
     const url = new URL(currentUrl);
     const pathSegments = url.pathname.split("/"); // Split the path by '/'
     setId(pathSegments[pathSegments.length - 1]); // Get the last segment
-  });
+  }, []);
 
   useEffect(() => {
     const fetchTeam = async () => {

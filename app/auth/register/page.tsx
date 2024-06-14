@@ -166,14 +166,21 @@ export default function SignUp() {
               <div className="w-1/3"></div>
               <p>eller</p>
               <hr className="w-1/3" />
-              <Button onClick={() => signIn("google")} variant="secondary">
-                <Image
-                  className="h-8 w-8 mr-2"
-                  src={GooglePicture}
-                  alt="Google"
-                />
-                Logg inn med Google
-              </Button>
+              <div className=" hover:cursor-not-allowed">
+                <Button
+                  onClick={() => signIn("google")}
+                  variant="secondary"
+                  disabled
+                >
+                  <Image
+                    className="h-8 w-8 mr-2"
+                    src={GooglePicture}
+                    alt="Google"
+                  />
+                  Login inn med Google
+                </Button>
+                <p className="text-xs text-left mt-2">Ikke implementert enda</p>
+              </div>
             </div>
           </CardContent>
         </Card>

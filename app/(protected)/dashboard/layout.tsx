@@ -15,27 +15,27 @@ const sidebarNavItems = [
     title: "Settings",
     items: [
       {
-        title: "Dashboard",
+        title: "Konto",
         href: "/dashboard",
         items: [],
       },
       {
-        title: "Profile",
+        title: "Profil",
         href: "/dashboard/profile",
         items: [],
         disabled: false,
       },
       {
-        title: "Settings",
+        title: "Innstillinger",
         href: "/dashboard/settings",
         items: [],
         disabled: true,
       },
       {
-        title: "Accounts",
+        title: "Konto",
         href: "/dashboard/accounts",
         items: [],
-        disabled: true,
+        disabled: false,
       },
     ],
   },

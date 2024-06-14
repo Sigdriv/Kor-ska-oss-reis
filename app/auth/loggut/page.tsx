@@ -1,12 +1,14 @@
-// pages/signout.js
 "use client";
 
 import { handleSignOut } from "@/actions";
-import { useEffect } from "react";
+import { useEffect, useTransition } from "react";
 
 export default function SignOut() {
+  const [pending, startTransition] = useTransition();
   useEffect(() => {
-    handleSignOut();
+    startTransition(async () => {
+      await handleSignOut();
+    });
   }, []);
 
   return (

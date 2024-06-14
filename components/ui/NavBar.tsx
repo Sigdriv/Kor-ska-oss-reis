@@ -23,7 +23,7 @@ export default async function NavBar() {
         <Link href="/">Hjem </Link>
         <Link href="/om-oss">Om oss </Link>
         <Link href="/bli-med">Bli med </Link>
-        {!session ? <Link href="/auth/logginn">Logg inn </Link> : null}
+        {!session && <Link href="/auth/logginn">Logg inn </Link>}
       </div>
 
       {!!session ? (

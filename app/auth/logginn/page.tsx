@@ -1,9 +1,10 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import GooglePicture from "@/assets/google.png";
 
 import { LoginSchema } from "@/schemas";
@@ -20,12 +21,10 @@ import {
 import { LoginValue } from "@/types/types";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 
 export default function LogIn() {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(LoginSchema),
@@ -60,12 +59,6 @@ export default function LogIn() {
       } else {
         window.location.href = "/min-side";
       }
-    });
-  };
-
-  const handlerSignInProvider = (provider: string) => {
-    startTransition(async () => {
-      await signIn(provider);
     });
   };
 
@@ -127,6 +120,9 @@ export default function LogIn() {
                       </FormItem>
                     )}
                   />
+                  <Link href="/auth/glemt-passord">
+                    <h1 className="text-right text-sm ">Glemt passord?</h1>
+                  </Link>
                 </div>
                 <div className="flex gap-3">
                   <Link href="/auth/register">
@@ -149,17 +145,21 @@ export default function LogIn() {
               <div className="w-1/3"></div>
               <p>eller</p>
               <hr className="w-1/3" />
-              <Button
-                onClick={() => handlerSignInProvider("google")}
-                variant="secondary"
-              >
-                <Image
-                  className="h-8 w-8 mr-2"
-                  src={GooglePicture}
-                  alt="Google"
-                />
-                Login inn med Google
-              </Button>
+              <div className=" hover:cursor-not-allowed">
+                <Button
+                  onClick={() => signIn("google")}
+                  variant="secondary"
+                  disabled
+                >
+                  <Image
+                    className="h-8 w-8 mr-2"
+                    src={GooglePicture}
+                    alt="Google"
+                  />
+                  Login inn med Google
+                </Button>
+                <p className="text-xs text-left mt-2">Ikke implementert enda</p>
+              </div>
             </div>
           </CardContent>
         </Card>
