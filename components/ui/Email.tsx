@@ -50,7 +50,7 @@ const Email = ({ Token }: EmailProps) => {
                       nettleser:
                     </p>
                     <a
-                      href={`http://localhost:3000/auth/reset-password/${Token}`}
+                      href={`https://kor-ska-oss-reis.vercel.app/auth/reset-password/${Token}`}
                       style={{
                         fontSize: "16px",
                         color: "#3182ce",
@@ -58,11 +58,12 @@ const Email = ({ Token }: EmailProps) => {
                         wordWrap: "break-word",
                       }}
                     >
-                      http://localhost:3000/auth/reset-password/{Token}
+                      https://kor-ska-oss-reis.vercel.app/auth/reset-password/
+                      {Token}
                     </a>
                     <div style={{ marginTop: "20px" }}>
                       <a
-                        href={`http://localhost:3000/auth/reset-password/${Token}`}
+                        href={`https://kor-ska-oss-reis.vercel.app/auth/reset-password/${Token}`}
                         style={{
                           display: "inline-block",
                           padding: "10px 20px",
