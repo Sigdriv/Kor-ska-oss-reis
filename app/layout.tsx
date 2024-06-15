@@ -10,7 +10,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Kor ska oss reis",
-  description: "Kor ska oss reis",
+  description:
+    "Kor ska oss reis er basert på en egen idé med som er basert på 'Påskelabyrinten' til NRK. Vi har laget en egen versjon av dette, som vi har kalt 'Kor ska oss reis'.",
+  // image: "../public/assets/main/kor-ska-oss-reis_2024_1920.png",
 };
 
 export default function RootLayout({
