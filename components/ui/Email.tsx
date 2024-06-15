@@ -2,9 +2,10 @@ import React from "react";
 
 interface EmailProps {
   Token: string;
+  URL: string | undefined;
 }
 
-const Email = ({ Token }: EmailProps) => {
+const Email = ({ URL, Token }: EmailProps) => {
   return (
     <html>
       <body style={{ margin: 0, padding: 0, backgroundColor: "#f8f9fa" }}>
@@ -50,7 +51,7 @@ const Email = ({ Token }: EmailProps) => {
                       nettleser:
                     </p>
                     <a
-                      href={`https://kor-ska-oss-reis.vercel.app/auth/reset-password/${Token}`}
+                      href={`${URL}/auth/reset-password/${Token}`}
                       style={{
                         fontSize: "16px",
                         color: "#3182ce",
@@ -58,12 +59,12 @@ const Email = ({ Token }: EmailProps) => {
                         wordWrap: "break-word",
                       }}
                     >
-                      https://kor-ska-oss-reis.vercel.app/auth/reset-password/
+                      {URL}/auth/reset-password/
                       {Token}
                     </a>
                     <div style={{ marginTop: "20px" }}>
                       <a
-                        href={`https://kor-ska-oss-reis.vercel.app/auth/reset-password/${Token}`}
+                        href={`${URL}/auth/reset-password/${Token}`}
                         style={{
                           display: "inline-block",
                           padding: "10px 20px",

@@ -3,11 +3,20 @@
 import Email from "@/components/ui/Email";
 import { db } from "@/lib/db";
 import { ForgotPasswordValue } from "@/types/types";
-import { Resend } from "resend";
+import { render } from "@react-email/render";
 
 export const forgotPassword = async (values: ForgotPasswordValue) => {
   const { email } = values;
-  const resend = new Resend(process.env.RESEND_API_KEY_RESET_PASSWORD);
+  const nodemailer = require("nodemailer");
+  const BaseURL = process.env.BASE_URL;
+
+  const transporter = nodemailer.createTransport({
+    service: process.env.EMAIL_SERVICE,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
 
   const tokenGenerate = async (): Promise<string> => {
     const token =
@@ -71,11 +80,15 @@ export const forgotPassword = async (values: ForgotPasswordValue) => {
   });
 
   try {
-    await resend.emails.send({
-      from: "Kor ska oss reis <onboarding@resend.dev>",
+    const EmailHTML = render(Email({ URL: BaseURL, Token: getToken.token }), {
+      pretty: true,
+    });
+
+    await transporter.sendMail({
+      from: "Kor ska oss reis <sigdriv06@gmail.com>",
       to: email,
       subject: "Tilbakestill passord",
-      react: Email({ Token: getToken.token }),
+      html: EmailHTML,
     });
   } catch (error) {
     console.log(error);
@@ -87,6 +100,6 @@ export const forgotPassword = async (values: ForgotPasswordValue) => {
 
   return {
     success: "Epost sendt",
-    description: "Epost med instruksjoner er sendt",
+    description: "Epost med instruksjoner er sendt, sjekk søppelmappen ",
   };
 };
