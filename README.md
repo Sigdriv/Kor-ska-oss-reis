@@ -1,4 +1,6 @@
-View this project live [here](https://nextjs-auth-sigdriv.vercel.app/)
+This webpage is made for 'Kor ska oss reis' a version of the 'Påskelabyrinten' from NRK
+
+View this project live [https://kor-ska-oss-reis.vercel.app/](https://kor-ska-oss-reis.vercel.app/) andvil soon be available on this URL: [https://paskelabyrint.no](https://paskelabyrint.no)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
