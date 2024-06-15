@@ -49,4 +49,6 @@ export default {
   //     return Promise.resolve(session);
   //   },
   // },
+
+  trustHost: true,
 } satisfies NextAuthConfig;

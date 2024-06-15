@@ -162,7 +162,9 @@ export default function SignUp() {
                 </div>
               </form>
             </Form>
-            <div className="flex flex-col items-center justify-center space-y-3">
+
+            {/* TODO: Fix google signin */}
+            {/* <div className="flex flex-col items-center justify-center space-y-3">
               <div className="w-1/3"></div>
               <p>eller</p>
               <hr className="w-1/3" />
@@ -181,7 +183,7 @@ export default function SignUp() {
                 </Button>
                 <p className="text-xs text-left mt-2">Ikke implementert enda</p>
               </div>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </main>
