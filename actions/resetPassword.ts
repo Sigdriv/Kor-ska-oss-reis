@@ -34,6 +34,21 @@ export const resetPassword = async (values: ResetPassword) => {
     };
   }
 
+  const user = await db.user.findUnique({
+    where: {
+      id: resetPasswordUser.userId,
+    },
+  });
+
+  const samePassword = await bcrypt.compare(password, user.password);
+
+  if (samePassword) {
+    return {
+      error: "Samme passord",
+      description: "Du kan ikke bruke samme passord, venligst velg et annet",
+    };
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   await db.user.update({
