@@ -9,6 +9,26 @@ export const forgotPassword = async (values: ForgotPasswordValue) => {
   const { email } = values;
   const resend = new Resend(process.env.RESEND_API_KEY_RESET_PASSWORD);
 
+  const tokenGenerate = async (): Promise<string> => {
+    const token =
+      Math.random().toString(36).substring(2) +
+      Math.random().toString(36).substring(2);
+    return await tokenCheck(token);
+  };
+
+  const tokenCheck = async (token: string) => {
+    const alreadyInUse = await db.resetPassword.findFirst({
+      where: {
+        token,
+      },
+    });
+    if (alreadyInUse) {
+      return await tokenGenerate();
+    } else {
+      return token;
+    }
+  };
+
   const user = await db.user.findUnique({
     where: {
       email,
@@ -39,10 +59,7 @@ export const forgotPassword = async (values: ForgotPasswordValue) => {
   await db.resetPassword.create({
     data: {
       expires: new Date(Date.now() + 15 * 60 * 1000),
-      token: (
-        Math.random().toString(36).substring(2) +
-        Math.random().toString(36).substring(2)
-      ).substring(0, 30),
+      token: await tokenGenerate(),
       userId: user.id,
     },
   });
