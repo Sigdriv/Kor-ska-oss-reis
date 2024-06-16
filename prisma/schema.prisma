@@ -53,10 +53,9 @@ model Team {
   id          String   @id @default(cuid())
   name        String
   email       String
-  phone         String
-  countParticipants String
-  youngestParticipant String
-  oldestParticipant String
+  countParticipants String?
+  youngestParticipant String?
+  oldestParticipant String?
   teamName    String   @unique
   createdAt   DateTime @default(now())
   createdBy   User     @relation(fields: [createdById], references: [id])

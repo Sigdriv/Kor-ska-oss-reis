@@ -53,25 +53,21 @@ export const createTeamsSchema = z.object({
       required_error: "Venligst skriv inn en e-postadresse.",
     })
     .email(),
-  phone: z.string().min(8, { message: "Venligst skriv inn et telefonnummer" }),
   teamName: z.string().min(2, {
     message: "Venligst skriv inn et lagnavn.",
   }),
-  userEmail: z.string().email(),
   countParticipants: z
     .string()
     .min(1, {
-      message: "Venligst skriv inn antall deltagere dere er i laget.",
+      message: "Venligst skriv inn antall deltagere dere er i laget",
     })
     .refine((value) => Number(value) >= 0, {
       message: "Antall deltakere kan ikke være under 0",
-    }),
-  youngestParticipant: z.string().min(1, {
-    message: "Venligst skriv inn en alder på den yngste.",
-  }),
-  oldestParticipant: z.string().min(1, {
-    message: "Venligst skriv inn en alder på den eldste.",
-  }),
+    })
+    .optional(),
+  youngestParticipant: z.string().optional(),
+  oldestParticipant: z.string().optional(),
+  userEmail: z.string().email(),
 });
 
 export const updateTeamsSchema = z.object({

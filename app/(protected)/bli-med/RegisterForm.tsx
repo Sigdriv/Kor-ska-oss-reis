@@ -33,7 +33,6 @@ export function RegisterForm() {
     defaultValues: {
       name: "",
       email: "",
-      phone: "",
       teamName: "",
       countParticipants: "",
       youngestParticipant: "",
@@ -47,7 +46,6 @@ export function RegisterForm() {
 
       form.setValue("name", session?.user?.name ? session.user?.name : "");
       form.setValue("email", session?.user?.email ? session.user?.email : "");
-      form.setValue("phone", session?.user?.phone ? session.user?.phone : "");
       form.setValue(
         "userEmail",
         session?.user?.email ? session.user?.email : ""
@@ -110,6 +108,7 @@ export function RegisterForm() {
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
+                <FormDescription>Navn kontaktperson</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -123,19 +122,7 @@ export function RegisterForm() {
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Telefon</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
+                <FormDescription>E-post kontaktperson</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -162,6 +149,9 @@ export function RegisterForm() {
                 <FormControl>
                   <Input {...field} type="number" />
                 </FormControl>
+                <FormDescription>
+                  Skriv inn ca. estimat hvis usikkert
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

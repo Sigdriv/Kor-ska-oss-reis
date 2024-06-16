@@ -74,6 +74,7 @@ export default async function Pamelte() {
                   Send epost til alle
                 </Link>
               </TableCell>
+              {/* <TableCell className="">{}</TableCell> */}
               <TableCell className="">{}</TableCell>
             </TableRow>
           </TableFooter>

@@ -7,7 +7,6 @@ export const registerTeam = async (value: CreateTeamsValues) => {
   const {
     name,
     email,
-    phone,
     countParticipants,
     youngestParticipant,
     oldestParticipant,
@@ -47,7 +46,7 @@ export const registerTeam = async (value: CreateTeamsValues) => {
       data: {
         name,
         email,
-        phone,
+        // phone,
         countParticipants,
         youngestParticipant,
         oldestParticipant,
