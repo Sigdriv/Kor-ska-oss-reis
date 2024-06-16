@@ -10,7 +10,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { HomeIcon, LogOut, Settings, User, UsersIcon } from "lucide-react";
+import { HomeIcon, LogOut, User, UserCog, UsersIcon } from "lucide-react";
 import Image from "next/image";
 import { auth } from "@/auth";
 
@@ -45,6 +45,25 @@ export default async function NavBar() {
               )}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
+              {session.user.role === "admin" && (
+                <>
+                  <DropdownMenuGroup>
+                    <Link href="/admin">
+                      <DropdownMenuItem>
+                        <UserCog className="mr-2 h-4 w-4" />
+                        <span>Admin</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/admin/paamelte">
+                      <DropdownMenuItem>
+                        <UsersIcon className="mr-2 h-4 w-4" />
+                        <span>Alle lag</span>
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                </>
+              )}
               <DropdownMenuGroup>
                 <Link href="/min-side">
                   <DropdownMenuItem>
