@@ -15,12 +15,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useTransition } from "react";
-import { getUser, registerTeam } from "@/actions";
+import { registerTeam } from "@/actions";
 import { CreateTeamsValues } from "@/types/types";
 import { createTeamsSchema } from "@/schemas";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/use-toast";
+import { getSession } from "next-auth/react";
 
 export function RegisterForm() {
   const [isPending, startTransition] = useTransition();
@@ -32,6 +33,7 @@ export function RegisterForm() {
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
       teamName: "",
       countParticipants: "",
       youngestParticipant: "",
@@ -41,19 +43,14 @@ export function RegisterForm() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const getSession = await getUser();
+      const session = await getSession();
 
-      form.setValue(
-        "name",
-        getSession?.user?.name ? getSession.user?.name : ""
-      );
-      form.setValue(
-        "email",
-        getSession?.user?.email ? getSession.user?.email : ""
-      );
+      form.setValue("name", session?.user?.name ? session.user?.name : "");
+      form.setValue("email", session?.user?.email ? session.user?.email : "");
+      form.setValue("phone", session?.user?.phone ? session.user?.phone : "");
       form.setValue(
         "userEmail",
-        getSession?.user?.email ? getSession.user?.email : ""
+        session?.user?.email ? session.user?.email : ""
       );
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setLoading(false);
@@ -99,6 +96,7 @@ export function RegisterForm() {
       <Skeleton className="w-[400px] h-[40px] rounded-md" />
       <Skeleton className="w-[400px] h-[40px] rounded-md" />
       <Skeleton className="w-[400px] h-[40px] rounded-md" />
+      <Skeleton className="w-[400px] h-[40px] rounded-md" />
     </div>
   ) : (
     <Form {...form}>
@@ -122,6 +120,19 @@ export function RegisterForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Epost</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Telefon</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -187,22 +198,6 @@ export function RegisterForm() {
               </FormItem>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name="userEmail"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Opprettes av</FormLabel>
-                <FormControl>
-                  <Input {...field} disabled />
-                </FormControl>
-                <FormDescription>
-                  Eposten som er registrert på din bruker
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           <div className="flex justify-center text-3xl">
             <Button type="submit" disabled={isPending}>
               Meld på laget

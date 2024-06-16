@@ -1,4 +1,5 @@
 "use client";
+
 import { RegisterValue } from "@/types/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,17 +16,12 @@ import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { register } from "@/actions";
 import Link from "next/link";
-import React, { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/auth";
-import Image from "next/image";
-import GooglePicture from "@/assets/google.png";
 import { toast } from "@/components/ui/use-toast";
 
 export default function SignUp() {
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -34,6 +30,7 @@ export default function SignUp() {
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
       password: "",
     },
   });
@@ -123,6 +120,28 @@ export default function SignUp() {
                 <div className="flex flex-col space-y-1.5">
                   <FormField
                     control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Telefon</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            disabled={isPending}
+                            id="phone"
+                            type="phone"
+                            placeholder="Telefon"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="flex flex-col space-y-1.5">
+                  <FormField
+                    control={form.control}
                     name="password"
                     render={({ field }) => (
                       <FormItem>
@@ -141,9 +160,6 @@ export default function SignUp() {
                     )}
                   />
                 </div>
-                {success && (
-                  <p className="p-2 text-green-500 rounded-lg">{success}</p>
-                )}
 
                 <div className="flex gap-3">
                   <Link href="/auth/logginn">

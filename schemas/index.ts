@@ -8,6 +8,7 @@ export const LoginSchema = z.object({
 export const RegisterSchema = z.object({
   name: z.string().min(1, { message: "Venligst skriv inn et navn" }),
   email: z.string().email(),
+  phone: z.string().min(8, { message: "Venligst skriv inn et telefonnummer" }),
   password: z
     .string()
     .min(6, { message: "Passord må være mer enn 6 karakterer" }),
@@ -52,6 +53,7 @@ export const createTeamsSchema = z.object({
       required_error: "Venligst skriv inn en e-postadresse.",
     })
     .email(),
+  phone: z.string().min(8, { message: "Venligst skriv inn et telefonnummer" }),
   teamName: z.string().min(2, {
     message: "Venligst skriv inn et lagnavn.",
   }),

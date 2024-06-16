@@ -12,9 +12,9 @@ export const register = async (values: RegisterValue) => {
     return { error: "Ugyldige felt" };
   }
 
-  const { email, password, name } = validatedFields.success
+  const { email, password, name, phone } = validatedFields.success
     ? validatedFields.data
-    : { email: "", password: "", name: "" };
+    : { email: "", password: "", name: "", phone: "" };
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -32,6 +32,7 @@ export const register = async (values: RegisterValue) => {
     data: {
       name,
       email,
+      phone,
       password: hashedPassword,
     },
   });

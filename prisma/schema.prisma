@@ -37,10 +37,11 @@ model Account {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
-  password      String?
-  email         String?   @unique
+  name          String
+  password      String
+  email         String   @unique
   emailVerified DateTime?
+  phone         String?
   image         String?
   role          String?   @default("user")
   accounts      Account[]
@@ -52,6 +53,7 @@ model Team {
   id          String   @id @default(cuid())
   name        String
   email       String
+  phone         String
   countParticipants String
   youngestParticipant String
   oldestParticipant String
