@@ -8,7 +8,6 @@ import {
 } from "@/routes";
 
 import authConfig from "./auth.config";
-// import { db } from "./lib/db";
 
 const { auth } = NextAuth(authConfig);
 
@@ -16,20 +15,12 @@ export default auth(async (req) => {
   const { nextUrl } = req;
 
   const isLoggedIn = !!req.auth;
-  // const userRole = async (req: any) => {
-  //   if (isLoggedIn) {
-  //     const user = await db.user.findUnique({
-  //       where: { email: req.auth.user.email },
-  //       select: { role: true },
-  //     });
-  //     return user.role;
-  //   }
-  // }
+  const role = req.auth?.user.role;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  // const isAminRoute = nextUrl.pathname.startsWith("/admin");
+  const isAminRoute = nextUrl.pathname.startsWith("/admin");
 
   if (nextUrl.pathname.startsWith("/auth/reset-password")) return;
 
@@ -39,13 +30,18 @@ export default auth(async (req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      if (role === "admin") {
+        return Response.redirect(new URL("/admin", nextUrl));
+      } else {
+        return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      }
     }
 
     return;
   }
 
-  // if (isAminRoute) return Response.redirect(new URL("/admin", nextUrl));
+  if (isAminRoute && role !== "admin")
+    return Response.redirect(new URL("/min-side", nextUrl));
 
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("auth/logginn", nextUrl.origin));

@@ -57,7 +57,7 @@ export default function LogIn() {
           });
         }
       } else {
-        window.location.href = "/min-side";
+        window.location.href = "/auth/logginn";
       }
     });
   };

@@ -52,23 +52,29 @@ export const {
       },
     }),
   ],
-  // callbacks: {
-  //   async session({ session, token, user }) {
-  //     // Send properties to the client, like an access_token and user id from a provider.
-  //     session.user.id = token.id;
-  //     session.user.role = user.role;
-
-  //     return session;
-  //   },
-  // },
-  // callbacks: {
-  //   async jwt({ token, user }) {
-  //     if (user) token.role = user.role;
-  //     return token;
-  //   },
-  //   async session({ session, token }) {
-  //     if (session?.user) session.user.role = token.role;
-  //     return session;
-  //   },
-  // },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          phone: user.phone,
+          role: user.role,
+        };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id as string,
+          phone: token.phone as string,
+          role: token.role as string,
+        },
+        token: token,
+      };
+    },
+  },
 });

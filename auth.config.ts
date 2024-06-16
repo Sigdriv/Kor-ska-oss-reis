@@ -33,22 +33,30 @@ export default {
       // allowDangerousEmailAccountLinking: true,
     }),
   ],
-  // callbacks: {
-  //   async session({ session, user, token, role }: any) {
-  //     return {
-  //       ...session,
-  //       user,
-  //       token,
-  //     };
-  //   },
-  // },
-
-  // callbacks: {
-  //   session: async ({ session, user }) => {
-  //     session.user.role = user.role; // Add the role to the session
-  //     return Promise.resolve(session);
-  //   },
-  // },
-
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          phone: user.phone,
+          role: user.role,
+        };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id as string,
+          phone: token.phone as string,
+          role: token.role as string,
+        },
+        token: token,
+      };
+    },
+  },
   trustHost: true,
 } satisfies NextAuthConfig;
