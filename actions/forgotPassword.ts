@@ -91,7 +91,6 @@ export const forgotPassword = async (values: ForgotPasswordValue) => {
       html: EmailHTML,
     });
   } catch (error) {
-    console.log(error);
     return {
       error: "Epost kunne ikke sendes",
       description: "Venligst prøv igjen",
