@@ -1,5 +1,6 @@
 "use client";
 import { getTeamsCount } from "@/actions";
+import generateExcelFile from "@/actions/generateExcelFile";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -35,6 +36,32 @@ export default function PaamelteCard() {
     });
   }, [totalParticipantsTeams]);
 
+  const handleDownload = async () => {
+    try {
+      const blob = await generateExcelFile();
+      const date = new Date();
+      const day = ("0" + date.getDate()).slice(-2);
+      const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      const year = date.getFullYear().toString().slice(-2);
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      const seconds = ("0" + date.getSeconds()).slice(-2);
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute(
+        "download",
+        `KorSkaOssReis_${year}${month}${day}-${hours}${minutes}${seconds}.xlsx`
+      );
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("Error generating the Excel file:", err);
+    }
+  };
+
   return (
     <main className=" pt-20 ">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -61,7 +88,7 @@ export default function PaamelteCard() {
         <div>
           <Card className="w-96">
             <CardHeader className=" flex items-center justify-center">
-              <CardTitle>Påmelte lag</CardTitle>
+              <CardTitle>Last ned Excel ark</CardTitle>
               <CardDescription>Antall påmelte lag</CardDescription>
             </CardHeader>
             <CardContent className="flex items-center justify-center">
@@ -72,9 +99,9 @@ export default function PaamelteCard() {
               )}
             </CardContent>
             <CardFooter className=" flex items-center justify-center">
-              <Link href="/admin/paamelte">
-                <Button>Se alle påmelte lag</Button>
-              </Link>
+              <Button onClick={() => handleDownload()}>
+                Last ned Excel ark
+              </Button>
             </CardFooter>
           </Card>
         </div>
