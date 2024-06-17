@@ -1,0 +1,3 @@
+CREATE DATABASE Paskelabyrint;
+
+DROP DATABASE IF EXISTS postgres;
