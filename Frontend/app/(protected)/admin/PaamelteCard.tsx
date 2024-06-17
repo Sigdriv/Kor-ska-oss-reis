@@ -39,11 +39,21 @@ export default function PaamelteCard() {
   const handleDownload = async () => {
     try {
       const blob = await generateExcelFile();
+      const date = new Date();
+      const day = ("0" + date.getDate()).slice(-2);
+      const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      const year = date.getFullYear().toString().slice(-2);
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      const seconds = ("0" + date.getSeconds()).slice(-2);
 
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "teams.xlsx");
+      link.setAttribute(
+        "download",
+        `KorSkaOssReis_${year}${month}${day}-${hours}${minutes}${seconds}.xlsx`
+      );
       document.body.appendChild(link);
       link.click();
       link.remove();
