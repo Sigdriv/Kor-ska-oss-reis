@@ -13,3 +13,4 @@ export * from "./registerTeam";
 export * from "./resetPassword";
 export * from "./updateProfile";
 export * from "./updateTeam";
+export * from "./generateExcelFile";
