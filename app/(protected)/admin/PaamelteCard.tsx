@@ -1,5 +1,6 @@
 "use client";
 import { getTeamsCount } from "@/actions";
+import generateExcelFile from "@/actions/generateExcelFile";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -35,6 +36,22 @@ export default function PaamelteCard() {
     });
   }, [totalParticipantsTeams]);
 
+  const handleDownload = async () => {
+    try {
+      const blob = await generateExcelFile();
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "teams.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("Error generating the Excel file:", err);
+    }
+  };
+
   return (
     <main className=" pt-20 ">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -61,7 +78,7 @@ export default function PaamelteCard() {
         <div>
           <Card className="w-96">
             <CardHeader className=" flex items-center justify-center">
-              <CardTitle>Påmelte lag</CardTitle>
+              <CardTitle>Last ned Excel ark</CardTitle>
               <CardDescription>Antall påmelte lag</CardDescription>
             </CardHeader>
             <CardContent className="flex items-center justify-center">
@@ -72,9 +89,9 @@ export default function PaamelteCard() {
               )}
             </CardContent>
             <CardFooter className=" flex items-center justify-center">
-              <Link href="/admin/paamelte">
-                <Button>Se alle påmelte lag</Button>
-              </Link>
+              <Button onClick={() => handleDownload()}>
+                Last ned Excel ark
+              </Button>
             </CardFooter>
           </Card>
         </div>
