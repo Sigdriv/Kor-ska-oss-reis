@@ -31,7 +31,6 @@ export default function DineKontaktLag() {
             }
           }
         } catch (error) {
-          console.log(error);
           setError(true);
           toast({
             title: "Feil",

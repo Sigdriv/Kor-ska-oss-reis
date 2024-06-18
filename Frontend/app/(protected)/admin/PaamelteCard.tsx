@@ -58,7 +58,11 @@ export default function PaamelteCard() {
       link.click();
       link.remove();
     } catch (err) {
-      console.error("Error generating the Excel file:", err);
+      toast({
+        title: "Feil",
+        description: "Generering av filen feilet, vennligst prøv igjen senere ",
+        variant: "destructive",
+      });
     }
   };
 
