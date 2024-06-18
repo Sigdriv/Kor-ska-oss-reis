@@ -5,12 +5,13 @@ import { getTeamById, getUser } from "@/actions";
 import { UpdatePaamelte } from "./UpdatePaamelte";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/use-toast";
-import { auth } from "@/auth";
+import { useRouter } from "next/navigation";
 
 export default function TeamEditPage() {
   const [team, setTeam] = useState<Teams>();
   const [teamId, setTeamId] = useState<string>();
   const [contactPerson, setContactPerson] = useState<boolean>(false);
+  const route = useRouter();
 
   useEffect(() => {
     const currentUrl = window.location.href;
@@ -32,6 +33,7 @@ export default function TeamEditPage() {
             setTeam(await getTeamById(teamId));
             setContactPerson(true);
           } else {
+            route.push("/min-side/dine-paamelte");
             toast({
               title: "Feil",
               description: "Du har ikke tilgang til dette laget",
@@ -40,6 +42,7 @@ export default function TeamEditPage() {
           }
         }
       } catch (error) {
+        route.push("/min-side/dine-paamelte");
         toast({
           title: "Feil",
           description:
