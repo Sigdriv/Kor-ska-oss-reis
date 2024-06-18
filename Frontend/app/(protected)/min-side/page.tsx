@@ -7,7 +7,7 @@ export default function page() {
     <div>
       <h1>Min side</h1>
       <Link href="/min-side/dine-paamelte">
-        <Button>Dine påmelte lag</Button>
+        <Button>Dine påmeldte lag</Button>
       </Link>
     </div>
   );

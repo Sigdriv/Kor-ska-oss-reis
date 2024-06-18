@@ -72,8 +72,8 @@ export default function PaamelteCard() {
         <div>
           <Card className="w-96">
             <CardHeader className=" flex items-center justify-center">
-              <CardTitle>Påmelte lag</CardTitle>
-              <CardDescription>Antall påmelte lag</CardDescription>
+              <CardTitle>Påmeldte lag</CardTitle>
+              <CardDescription>Antall påmeldte lag</CardDescription>
             </CardHeader>
             <CardContent className="flex items-center justify-center">
               {!error ? (
@@ -84,7 +84,7 @@ export default function PaamelteCard() {
             </CardContent>
             <CardFooter className=" flex items-center justify-center">
               <Link href="/admin/paamelte">
-                <Button>Se alle påmelte lag</Button>
+                <Button>Se alle påmeldte lag</Button>
               </Link>
             </CardFooter>
           </Card>
@@ -93,7 +93,7 @@ export default function PaamelteCard() {
           <Card className="w-96">
             <CardHeader className=" flex items-center justify-center">
               <CardTitle>Last ned Excel ark</CardTitle>
-              <CardDescription>Antall påmelte lag</CardDescription>
+              <CardDescription>Antall påmeldte lag</CardDescription>
             </CardHeader>
             <CardContent className="flex items-center justify-center">
               {!error ? (
@@ -112,8 +112,8 @@ export default function PaamelteCard() {
         <div>
           <Card className="w-96">
             <CardHeader className=" flex items-center justify-center">
-              <CardTitle>Påmelte lag</CardTitle>
-              <CardDescription>Antall påmelte lag</CardDescription>
+              <CardTitle>Påmeldte lag</CardTitle>
+              <CardDescription>Antall påmeldte lag</CardDescription>
             </CardHeader>
             <CardContent className="flex items-center justify-center">
               {!error ? (
@@ -124,7 +124,7 @@ export default function PaamelteCard() {
             </CardContent>
             <CardFooter className=" flex items-center justify-center">
               <Link href="/admin/paamelte">
-                <Button>Se alle påmelte lag</Button>
+                <Button>Se alle påmeldte lag</Button>
               </Link>
             </CardFooter>
           </Card>

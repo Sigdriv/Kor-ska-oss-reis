@@ -28,11 +28,11 @@ export default async function Pamelte() {
   return (
     <main className="w-screen">
       <div className=" flex justify-center items-center text-2xl pt-20">
-        <h1>Årets påmelte lag</h1>
+        <h1>Årets påmeldte lag</h1>
       </div>
       <div className="p-24">
         <Table>
-          <TableCaption>Liste over årets påmelte lag</TableCaption>
+          <TableCaption>Liste over årets påmeldte lag</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[250px]">Lagnavn</TableHead>
