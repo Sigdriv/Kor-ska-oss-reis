@@ -46,7 +46,6 @@ export const registerTeam = async (value: CreateTeamsValues) => {
       data: {
         name,
         email,
-        // phone,
         countParticipants,
         youngestParticipant,
         oldestParticipant,

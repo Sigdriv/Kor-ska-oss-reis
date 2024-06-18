@@ -22,18 +22,22 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 import Link from "next/link";
 
-export function UpdatePaamelte(
-  {
-    id,
-    name,
-    email,
-    teamName,
-    countParticipants,
-    youngestParticipant,
-    oldestParticipant,
-  }: UpdateTeamsValues,
-  key: string
-) {
+interface Props {
+  key: string;
+  contactPerson: boolean;
+}
+
+export function UpdatePaamelte({
+  id,
+  name,
+  email,
+  teamName,
+  countParticipants,
+  youngestParticipant,
+  oldestParticipant,
+  key,
+  contactPerson,
+}: UpdateTeamsValues & Props) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -88,8 +92,15 @@ export function UpdatePaamelte(
                 <FormItem>
                   <FormLabel>Navn</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} disabled={contactPerson} />
                   </FormControl>
+                  {contactPerson ? (
+                    <FormDescription>
+                      Kontaktperson kan ikke endres av kontaktperson
+                    </FormDescription>
+                  ) : (
+                    <FormDescription>Navn kontaktperson</FormDescription>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}
@@ -101,8 +112,15 @@ export function UpdatePaamelte(
                 <FormItem>
                   <FormLabel>Epost</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} disabled={contactPerson} />
                   </FormControl>
+                  {contactPerson ? (
+                    <FormDescription>
+                      Epost kan ikke endres av kontaktperson
+                    </FormDescription>
+                  ) : (
+                    <FormDescription>Epost kontaktperson</FormDescription>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}

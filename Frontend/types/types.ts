@@ -66,16 +66,6 @@ export interface NavItemWithChildren extends NavItem {
   items: NavItemWithChildren[];
 }
 
-export type UpdateTeamsValues = {
-  id: string;
-  name: string;
-  email: string;
-  teamName: string;
-  countParticipants: string;
-  youngestParticipant?: string | undefined;
-  oldestParticipant?: string | undefined;
-};
-
 export interface MainNavItem extends NavItem {}
 
 export interface SidebarNavItem extends NavItemWithChildren {}
@@ -83,4 +73,5 @@ export interface SidebarNavItem extends NavItemWithChildren {}
 export type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export type CreateTeamsValues = z.infer<typeof createTeamsSchema>;
+export type UpdateTeamsValues = z.infer<typeof updateTeamsSchema>;
 export type UpdateProfile = z.infer<typeof profileFormSchema>;

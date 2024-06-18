@@ -24,6 +24,7 @@ import { toast } from "@/components/ui/use-toast";
 
 export interface props {
   setDeleted: (value: boolean) => void;
+  contactPerson: boolean;
 }
 
 export default function DinePaamelte({
@@ -31,6 +32,7 @@ export default function DinePaamelte({
   id,
   countParticipants,
   setDeleted,
+  contactPerson,
 }: teamsByUser & props) {
   const handleDeleteTeam = async () => {
     const response = await deleteTeam(id);
@@ -58,7 +60,7 @@ export default function DinePaamelte({
   };
 
   return (
-    <main className=" pt-20 flex items-center justify-center">
+    <main className=" pt-10 flex items-center justify-center">
       <Card className="w-96">
         <CardHeader className=" flex items-center justify-center">
           <CardTitle>{teamName}</CardTitle>
@@ -72,7 +74,9 @@ export default function DinePaamelte({
           </Link>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant={"destructive"}>Slett</Button>
+              <Button variant={"destructive"} disabled={contactPerson}>
+                Slett
+              </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

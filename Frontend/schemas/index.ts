@@ -63,8 +63,7 @@ export const createTeamsSchema = z.object({
     })
     .refine((value) => Number(value) >= 0, {
       message: "Antall deltakere kan ikke være under 0",
-    })
-    .optional(),
+    }),
   youngestParticipant: z.string().optional(),
   oldestParticipant: z.string().optional(),
   userEmail: z.string().email(),
@@ -91,10 +90,6 @@ export const updateTeamsSchema = z.object({
     .refine((value) => Number(value) >= 0, {
       message: "Antall deltakere kan ikke være under 0",
     }),
-  youngestParticipant: z.string().min(1, {
-    message: "Venligst skriv inn en alder på den yngste.",
-  }),
-  oldestParticipant: z.string().min(1, {
-    message: "Venligst skriv inn en alder på den eldste.",
-  }),
+  youngestParticipant: z.string().optional(),
+  oldestParticipant: z.string().optional(),
 });

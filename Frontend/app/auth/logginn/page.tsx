@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useTransition } from "react";
-import GooglePicture from "@/assets/google.png";
+import GooglePicture from "@/public/assets/google/google.png";
 
 import { LoginSchema } from "@/schemas";
 import { useForm } from "react-hook-form";

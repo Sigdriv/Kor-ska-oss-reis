@@ -2,17 +2,11 @@
 
 import { db } from "@/lib/db";
 
-export const getTeamsByUser = async (email: string) => {
-  const user = await db.user.findUnique({
-    where: {
-      email,
-    },
-  });
-
+export const getTeamsByUserId = async (id: string) => {
   return await db.team.findMany({
     where: {
       createdBy: {
-        id: user.id,
+        id: id,
       },
     },
     orderBy: {
