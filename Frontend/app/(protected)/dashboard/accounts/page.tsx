@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
-import GooglePicture from "@/assets/google.png";
+import GooglePicture from "@/public/assets/google/google.png";
 
 export default function page() {
   return (
