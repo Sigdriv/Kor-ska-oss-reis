@@ -5,14 +5,24 @@ export const LoginSchema = z.object({
   password: z.string().min(1, { message: "Passord kan ikke være tomt" }),
 });
 
-export const RegisterSchema = z.object({
-  name: z.string().min(1, { message: "Venligst skriv inn et navn" }),
-  email: z.string().email(),
-  phone: z.string().min(8, { message: "Venligst skriv inn et telefonnummer" }),
-  password: z
-    .string()
-    .min(6, { message: "Passord må være mer enn 6 karakterer" }),
-});
+export const RegisterSchema = z
+  .object({
+    name: z.string().min(1, { message: "Venligst skriv inn et navn" }),
+    email: z.string().email(),
+    phone: z
+      .string()
+      .min(8, { message: "Venligst skriv inn et telefonnummer" }),
+    password: z
+      .string()
+      .min(6, { message: "Passord må være mer enn 6 karakterer" }),
+    repeatPassword: z.string().min(6, {
+      message: "Passord må være mer enn 6 karakterer",
+    }),
+  })
+  .refine((data) => data.password === data.repeatPassword, {
+    message: "Passordene må være like",
+    path: ["repeatPassword"], // Error will be reported on repeatPassword
+  });
 
 export const forgotPasswordSchema = z.object({
   email: z.string().email(),
@@ -42,6 +52,9 @@ export const profileFormSchema = z.object({
       required_error: "Venligst skriv inn en e-postadresse.",
     })
     .email(),
+  phone: z.string().min(8, {
+    message: "Venligst skriv inn et telefonnummer.",
+  }),
 });
 
 export const createTeamsSchema = z.object({

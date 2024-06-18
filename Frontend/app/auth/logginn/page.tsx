@@ -41,10 +41,10 @@ export default function LogIn() {
         redirect: false,
       });
       if (result && result.error) {
-        if (result.error === "CredentialsSignin") {
+        if (result.error === "Configuration") {
           toast({
             title: "Feil",
-            description: "Ugyldig legitimasjon eller bruker eksisterer ikke",
+            description: "Ugyldig epost eller passord",
             duration: 5000,
             variant: "destructive",
           });

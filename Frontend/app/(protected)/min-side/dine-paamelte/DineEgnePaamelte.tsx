@@ -7,6 +7,13 @@ import { teamsByUser } from "@/types/types";
 import { toast } from "@/components/ui/use-toast";
 import { getTeamsByUserId } from "@/actions/getTeamsByUserId";
 import { getUser } from "@/actions";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function DineEgnePaamelte() {
   const [temasByUser, setTemasByUser] = useState<teamsByUser[]>();
@@ -50,15 +57,30 @@ export default function DineEgnePaamelte() {
         </div>
       ) : !temasByUser?.length ? (
         !error ? (
-          <div className=" text-xl flex flex-col items-center justify-center gap-3 h-fit w-fit mt-3">
-            <div>
-              <h1>Du har ingen påmeldte lag</h1>
-            </div>
-            <div>
-              <Link href="/bli-med">
-                <Button>Meld på et lag her</Button>
-              </Link>
-            </div>
+          // <div className=" text-xl flex flex-col items-center justify-center gap-3 h-fit w-fit mt-3">
+          //   <div>
+          //     <h1>Du har ingen påmeldte lag</h1>
+          //   </div>
+          //   <div>
+          //     <Link href="/bli-med">
+          //       <Button>Meld på et lag her</Button>
+          //     </Link>
+          //   </div>
+          // </div>
+          <div className=" pt-10 flex text-center items-center justify-center">
+            <Card className="w-96">
+              <CardHeader className=" flex items-center justify-center">
+                <CardTitle>Du har ingen påmeldte lag</CardTitle>
+              </CardHeader>
+              <CardContent className="flex items-center justify-center text-center">
+                <p>Meld på ditt lag her:</p>
+              </CardContent>
+              <CardFooter className=" flex items-center justify-center gap-3">
+                <Link href={`/bli-med`}>
+                  <Button>Bli med</Button>
+                </Link>
+              </CardFooter>
+            </Card>
           </div>
         ) : (
           <div>

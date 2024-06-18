@@ -49,7 +49,7 @@ export default function DineKontaktLag() {
     <main className="mt-10">
       {!!noContactTeam && (
         <>
-          <h1>Dine lag hvor du er kontaktperson:</h1>
+          <h1>Lag hvor du er kontaktperson:</h1>
           {!!isPending || deleted ? (
             <div className="grid grid-cols-3">
               <div className="w-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pt-10 text-2xl pb-10 gap-16">

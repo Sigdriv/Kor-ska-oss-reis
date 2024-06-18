@@ -32,6 +32,7 @@ export default function SignUp() {
       email: "",
       phone: "",
       password: "",
+      repeatPassword: "",
     },
   });
 
@@ -81,7 +82,9 @@ export default function SignUp() {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Navn</FormLabel>
+                        <FormLabel>
+                          Navn<sup className=" text-red-600">*</sup>
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -102,7 +105,9 @@ export default function SignUp() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>E-post</FormLabel>
+                        <FormLabel>
+                          E-post<sup className=" text-red-600">*</sup>
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -123,7 +128,9 @@ export default function SignUp() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Telefon</FormLabel>
+                        <FormLabel>
+                          Telefon<sup className=" text-red-600">*</sup>
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -145,14 +152,39 @@ export default function SignUp() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Passord</FormLabel>
+                        <FormLabel>
+                          Passord<sup className=" text-red-600">*</sup>
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             disabled={isPending}
                             type="password"
                             id="Password"
-                            placeholder="Password"
+                            placeholder="passord"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  <FormField
+                    control={form.control}
+                    name="repeatPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Gjenta passord<sup className=" text-red-600">*</sup>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            disabled={isPending}
+                            type="password"
+                            id="RepeatPassword"
+                            placeholder="Gjenta passord"
                           />
                         </FormControl>
                         <FormMessage />

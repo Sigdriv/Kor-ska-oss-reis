@@ -80,7 +80,7 @@ export default async function NavBar() {
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <Link href="/dashboard/profile">
+                <Link href="/min-side/profil">
                   <DropdownMenuItem>
                     <User className="mr-2 h-4 w-4" />
                     <span>Profil</span>

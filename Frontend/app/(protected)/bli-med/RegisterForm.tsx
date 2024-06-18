@@ -104,7 +104,9 @@ export function RegisterForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Navn</FormLabel>
+                <FormLabel>
+                  Navn<sup className=" text-red-600">*</sup>
+                </FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -118,7 +120,9 @@ export function RegisterForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Epost</FormLabel>
+                <FormLabel>
+                  Epost<sup className=" text-red-600">*</sup>
+                </FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -132,7 +136,9 @@ export function RegisterForm() {
             name="teamName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Lagnavn</FormLabel>
+                <FormLabel>
+                  Lagnavn<sup className=" text-red-600">*</sup>
+                </FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -145,7 +151,9 @@ export function RegisterForm() {
             name="countParticipants"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Antall deltagere</FormLabel>
+                <FormLabel>
+                  Antall deltagere<sup className=" text-red-600">*</sup>
+                </FormLabel>
                 <FormControl>
                   <Input {...field} type="number" />
                 </FormControl>
