@@ -28,6 +28,16 @@ export const register = async (values: RegisterValue) => {
     return { error: "Epost er allerede i bruk" };
   }
 
+  const existingPhone = await db.user.findUnique({
+    where: {
+      phone,
+    },
+  });
+
+  if (existingPhone) {
+    return { error: "Telefonnummeret er allerede i bruk" };
+  }
+
   await db.user.create({
     data: {
       name,
