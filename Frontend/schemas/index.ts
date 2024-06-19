@@ -122,3 +122,19 @@ export const updateUserSchema = z.object({
   }),
   role: z.string(),
 });
+
+export const contactUsSchema = z.object({
+  name: z.string().min(2, {
+    message: "Venligst skriv inn et navn.",
+  }),
+  email: z
+    .string({
+      required_error: "Venligst skriv inn en e-postadresse.",
+    })
+    .email(),
+  phone: z.string().optional(),
+  subject: z.string().min(2, { message: "Venligst skriv inn et emne." }),
+  message: z.string().min(10, {
+    message: "Venligst skriv inn en melding på minst 10 tegn.",
+  }),
+});

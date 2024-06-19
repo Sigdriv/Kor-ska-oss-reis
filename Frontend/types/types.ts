@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { Icons } from "../components/ui/icons";
 import {
+  contactUsSchema,
   createTeamsSchema,
   profileFormSchema,
   updateTeamsSchema,
@@ -78,3 +79,4 @@ export type UpdateTeamsValues = z.infer<typeof updateTeamsSchema>;
 export type UpdateProfile = z.infer<typeof profileFormSchema>;
 
 export type updateUserType = z.infer<typeof updateUserSchema>;
+export type ContactUsType = z.infer<typeof contactUsSchema>;

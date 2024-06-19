@@ -7,7 +7,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { Cog, HomeIcon, LogOut, User, UserCog, UserCog2, UserSearch, UsersIcon } from "lucide-react";
+import {
+  Cog,
+  HomeIcon,
+  LogOut,
+  User,
+  UserCog,
+  UserSearch,
+  UsersIcon,
+} from "lucide-react";
 import Image from "next/image";
 import { auth } from "@/auth";
 
@@ -20,6 +28,7 @@ export default async function NavBar() {
         <Link href="/">Hjem </Link>
         <Link href="/om-oss">Om oss </Link>
         <Link href="/bli-med">Bli med </Link>
+        <Link href="/kontakt-oss">Kontakt oss </Link>
         {!session && <Link href="/auth/logginn">Logg inn </Link>}
       </div>
 
