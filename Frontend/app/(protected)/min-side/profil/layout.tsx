@@ -1,9 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { DocsSidebarNav } from "@/components/ui/sidebar-nav";
 import { Metadata } from "next";
-import Image from "next/image";
-
-// import { SidebarNav } from "@/app/examples/forms/components/sidebar-nav";
 
 export const metadata: Metadata = {
   title: "Forms",
@@ -43,8 +40,18 @@ interface SettingsLayoutProps {
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
     <main className="min-h-screen">
-      <div className="md:hidden"></div>
+      <div className="md:hidden">
+        {/* Content for mobile devices */}
+        <h2 className="text-xl font-bold tracking-tight text-center mt-10">
+          Innstillinger
+        </h2>
+        <p className="text-muted-foreground text-center">
+          Du kan ikke forandre kontoen din på denne enheten <br />
+          Vennligst bruk en pc
+        </p>
+      </div>
       <div className="hidden space-y-6 p-10 pb-16 md:block">
+        {/* Content for tablet and larger devices */}
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Innstillinger</h2>
           <p className="text-muted-foreground">Administrer din konto.</p>
