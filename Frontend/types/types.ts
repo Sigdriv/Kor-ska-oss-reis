@@ -4,6 +4,7 @@ import {
   createTeamsSchema,
   profileFormSchema,
   updateTeamsSchema,
+  updateUserSchema,
 } from "../schemas";
 
 export type LoginValue = {
@@ -75,3 +76,5 @@ export type ProfileFormValues = z.infer<typeof profileFormSchema>;
 export type CreateTeamsValues = z.infer<typeof createTeamsSchema>;
 export type UpdateTeamsValues = z.infer<typeof updateTeamsSchema>;
 export type UpdateProfile = z.infer<typeof profileFormSchema>;
+
+export type updateUserType = z.infer<typeof updateUserSchema>;

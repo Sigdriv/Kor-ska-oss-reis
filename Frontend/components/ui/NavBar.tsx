@@ -1,16 +1,13 @@
 import Link from "next/link";
-import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { HomeIcon, LogOut, User, UserCog, UsersIcon } from "lucide-react";
+import { Cog, HomeIcon, LogOut, User, UserCog, UserCog2, UserSearch, UsersIcon } from "lucide-react";
 import Image from "next/image";
 import { auth } from "@/auth";
 
@@ -45,7 +42,26 @@ export default async function NavBar() {
               )}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              {session.user.role === "admin" && (
+              {session.user.role === "DEV" && (
+                <>
+                  <DropdownMenuGroup>
+                    <Link href="/dev">
+                      <DropdownMenuItem>
+                        <Cog className="mr-2 h-4 w-4" />
+                        <span>Dev</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/dev/alle-brukere">
+                      <DropdownMenuItem>
+                        <UserSearch className="mr-2 h-4 w-4" />
+                        <span>Alle brukere</span>
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+              {session.user.role !== "USER" && (
                 <>
                   <DropdownMenuGroup>
                     <Link href="/admin">

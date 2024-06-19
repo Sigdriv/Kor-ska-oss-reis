@@ -106,3 +106,19 @@ export const updateTeamsSchema = z.object({
   youngestParticipant: z.string().optional(),
   oldestParticipant: z.string().optional(),
 });
+
+export const updateUserSchema = z.object({
+  id: z.string(),
+  name: z.string().min(2, {
+    message: "Venligst skriv inn et navn.",
+  }),
+  email: z
+    .string({
+      required_error: "Venligst skriv inn en e-postadresse.",
+    })
+    .email(),
+  phone: z.string().min(8, {
+    message: "Venligst skriv inn et telefonnummer.",
+  }),
+  role: z.string(),
+});

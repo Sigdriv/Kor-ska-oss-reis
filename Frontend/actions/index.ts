@@ -15,3 +15,6 @@ export * from "./updateProfile";
 export * from "./updateTeam";
 export * from "./generateExcelFile";
 export * from "./getTeamsByContactEmail";
+export * from "./getUserById";
+export * from "./updateUser";
+export * from "./getAllUsers";
