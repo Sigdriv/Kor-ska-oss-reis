@@ -46,8 +46,8 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
           Innstillinger
         </h2>
         <p className="text-muted-foreground text-center">
-          Du kan ikke forandre kontoen din på denne enheten <br />
-          Vennligst bruk en pc
+          Du kan ikke oppdatere kontoen på denne enheten/skjermstørrelsen <br />
+          Vennligst bruk en større skjerm
         </p>
       </div>
       <div className="hidden space-y-6 p-10 pb-16 md:block">
