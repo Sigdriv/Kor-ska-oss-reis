@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Head } from "@/components/ui/Head";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -8,10 +9,8 @@ export default function AboutUs() {
 
   return (
     <>
-      <head>
-        <title>Om oss</title>
-        <meta name="description" content="Om oss" />
-      </head>
+      <Head page="Om oss" />
+
       {underDev && (
         <div className="flex items-center justify-center w-full h-12 bg-red-500">
           <h1 className="text-white">Denne siden er under utvikling</h1>

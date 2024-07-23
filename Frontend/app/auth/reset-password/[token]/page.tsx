@@ -65,8 +65,11 @@ export default function ResetPassword() {
   return (
     <>
       <head>
-        <title>Tilbakestill passord</title>
-        <meta name="description" content="Tilbakestill passsord" />
+        <title>Kor ska oss reis | Tilbakestill passord</title>
+        <meta
+          name="description"
+          content="Kor ska oss reis | Tilbakestill passsord"
+        />
       </head>
       <main className="flex flex-col items-center justify-center min-h-screen ">
         <Card className=" bg-slate-200 w-[400]">

@@ -54,9 +54,10 @@ export default function ForgottenPassword() {
   return (
     <>
       <head>
-        <title>Reset passord</title>
-        <meta name="description" content="Reset passord" />
+        <title>Kor ska oss reis | Reset passord</title>
+        <meta name="description" content="Kor ska oss reis | Reset passord" />
       </head>
+
       <main className="flex flex-col items-center justify-center min-h-screen ">
         <Card className=" bg-slate-200 w-[400]">
           <CardHeader>

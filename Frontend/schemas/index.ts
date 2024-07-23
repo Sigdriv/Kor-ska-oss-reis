@@ -103,8 +103,8 @@ export const updateTeamsSchema = z.object({
     .refine((value) => Number(value) >= 0, {
       message: "Antall deltakere kan ikke være under 0",
     }),
-  youngestParticipant: z.string().optional(),
-  oldestParticipant: z.string().optional(),
+  youngestParticipant: z.string().nullable().optional(),
+  oldestParticipant: z.string().nullable().optional(),
 });
 
 export const updateUserSchema = z.object({

@@ -62,8 +62,8 @@ export default function SignUp() {
   return (
     <>
       <head>
-        <title>Registrer</title>
-        <meta name="Register" content="Register page" />
+        <title>Kor ska oss reis | Registrer</title>
+        <meta name="Register" content="Kor ska oss reis | Registrer" />
       </head>
       <main className="flex flex-col items-center justify-center min-h-screen ">
         <Card className=" bg-slate-200 w-[400]">

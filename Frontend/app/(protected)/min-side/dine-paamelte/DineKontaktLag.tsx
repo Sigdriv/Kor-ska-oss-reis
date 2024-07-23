@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
 import DinePaamelte from "./DinePaamelte";
 import { useEffect, useState, useTransition } from "react";
 import { teamsByUser } from "@/types/types";
@@ -49,7 +47,7 @@ export default function DineKontaktLag() {
       {!!noContactTeam && (
         <>
           <h1>Lag hvor du er kontaktperson:</h1>
-          {!!isPending || deleted ? (
+          {isPending && (
             <div className="grid grid-cols-3">
               <div className="w-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pt-10 text-2xl pb-10 gap-16">
                 <Skeleton className="w-[250px] h-[200px] sm:w-[200px] md:w-[300px] rounded-md" />
@@ -57,29 +55,19 @@ export default function DineKontaktLag() {
                 <Skeleton className="w-[250px] h-[200px] sm:w-[200px] md:w-[300px] rounded-md" />
               </div>
             </div>
-          ) : !temasByEmail?.length ? (
-            !error ? (
-              <div className="text-xl flex flex-col items-center justify-center gap-3 h-fit w-fit mt-3">
-                <div>
-                  <h1>Du har ingen påmeldte lag</h1>
-                </div>
-                <div>
-                  <Link href="/bli-med">
-                    <Button>Meld på et lag her</Button>
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <h1 className="text-red-700 text-xl">
-                  En feil oppsto under henting av lag <br /> Vennligst prøv
-                  igjen
-                </h1>
-              </div>
-            )
-          ) : (
+          )}
+
+          {!isPending && !deleted && error && (
+            <div>
+              <h1 className="text-red-700 text-xl">
+                En feil oppsto under henting av lag <br /> Vennligst prøv igjen
+              </h1>
+            </div>
+          )}
+
+          {!isPending && !deleted && !error && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-              {temasByEmail.map((team: teamsByUser) => (
+              {temasByEmail?.map((team: teamsByUser) => (
                 <DinePaamelte
                   contactPerson={true}
                   {...team}

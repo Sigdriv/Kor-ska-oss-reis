@@ -65,9 +65,10 @@ export default function LogIn() {
   return (
     <>
       <head>
-        <title>Logg inn</title>
-        <meta name="description" content="Logg inn" />
+        <title>Kor ska oss reis | Logg inn</title>
+        <meta name="description" content="Kor ska oss reis | Logg inn" />
       </head>
+
       <main className="flex flex-col items-center justify-center min-h-screen ">
         <Card className=" bg-slate-200 w-[400]">
           <CardHeader>

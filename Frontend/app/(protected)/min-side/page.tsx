@@ -39,30 +39,37 @@ export default function page() {
   });
 
   return (
-    <div>
-      <div className=" pt-10 text-2xl">
-        <h1 className=" text-center text-2xl">
-          <strong>Min side</strong>
-        </h1>
-        <div className="flex flex-row gap-2 ml-24 pt-20">
-          <Card className="w-96">
-            <CardHeader className=" flex items-center justify-center">
-              <CardTitle>Dine lag</CardTitle>
-            </CardHeader>
-            <CardDescription className="flex items-center justify-center">
-              Totalt påmeldte lag
-            </CardDescription>
-            <CardContent className="flex items-center justify-center">
-              <p>{usersTeams}</p>
-            </CardContent>
-            <CardFooter className=" flex items-center justify-center gap-3">
-              <Link href={`/min-side/dine-paamelte`}>
-                <Button>Se dine lag</Button>
-              </Link>
-            </CardFooter>
-          </Card>
+    <>
+      <head>
+        <title>Kor ska oss reis | Min side</title>
+        <meta name="description" content="Kor ska oss reis | Min side" />
+      </head>
+
+      <main>
+        <div className=" pt-10 text-2xl">
+          <h1 className=" text-center text-2xl">
+            <strong>Min side</strong>
+          </h1>
+          <div className="flex flex-row gap-2 ml-24 pt-20">
+            <Card className="w-96">
+              <CardHeader className=" flex items-center justify-center">
+                <CardTitle>Dine lag</CardTitle>
+              </CardHeader>
+              <CardDescription className="flex items-center justify-center">
+                Totalt påmeldte lag
+              </CardDescription>
+              <CardContent className="flex items-center justify-center">
+                <p>{usersTeams}</p>
+              </CardContent>
+              <CardFooter className=" flex items-center justify-center gap-3">
+                <Link href={`/min-side/dine-paamelte`}>
+                  <Button>Se dine lag</Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          </div>
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 }

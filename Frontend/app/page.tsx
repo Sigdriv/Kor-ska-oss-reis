@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <>
       <head>
-        <title>Kor ska oss reis</title>
-        <meta name="description" content="Kor ska oss reis" />
+        <title>Kor ska oss reis | Hjem</title>
+        <meta name="description" content="Kor ska oss reis | Hjem" />
       </head>
       <main className="flex min-h-screen flex-col items-center p-24">
         <div>
