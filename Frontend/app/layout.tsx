@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   title: "Kor ska oss reis",
   description:
     "Kor ska oss reis er basert på en egen idé med som er basert på 'Påskelabyrinten' til NRK. Vi har laget en egen versjon av dette, som vi har kalt 'Kor ska oss reis'.",
+  keywords:
+    "Kor ska oss reis, Påskelabyrinten, Påskelabyrint, NRK, Påske, Påskeegg, Påskequiz, Påskejakt, Påskegåte, Påskeoppgave, Påskekonkurranse, Rennebu, Berkåk, Oppdal, Trondheim, Melhus, Støren, Orkanger,Norge, Norway, Påskeferie, Påskeaktivitet, Påskelek, Påskeunderholdning, Påskekonkurranse, Påskequiz, Påskegåte, Påskeoppgave, Påskejakt, Påskeegg",
   // image: "../public/assets/main/kor-ska-oss-reis_2024_1920.png",
 };
 
