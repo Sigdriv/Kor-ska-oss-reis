@@ -23,7 +23,7 @@ export default auth(async (req) => {
   const isAminRoute = nextUrl.pathname.startsWith("/admin");
   const isDevRoute = nextUrl.pathname.startsWith("/dev");
 
-  if (nextUrl.pathname.startsWith("/auth/reset-password")) return;
+  if (nextUrl.pathname.startsWith("/auth/glemt-passord")) return;
 
   if (isApiAuthRoute) {
     return;

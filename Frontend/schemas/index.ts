@@ -30,6 +30,7 @@ export const forgotPasswordSchema = z.object({
 
 export const resetPasswordSchema = z
   .object({
+    token: z.string({ message: "Det skjedde en feil, prøv igjen senere" }),
     password: z.string().min(6, {
       message: "Passord må være mer enn 6 karakterer",
     }),

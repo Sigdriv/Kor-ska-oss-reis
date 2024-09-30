@@ -51,7 +51,7 @@ const Email = ({ URL, Token }: EmailProps) => {
                       nettleser:
                     </p>
                     <a
-                      href={`${URL}/auth/reset-password/${Token}`}
+                      href={`${URL}/auth/glemt-passord/${Token}`}
                       style={{
                         fontSize: "16px",
                         color: "#3182ce",
@@ -59,12 +59,12 @@ const Email = ({ URL, Token }: EmailProps) => {
                         wordWrap: "break-word",
                       }}
                     >
-                      {URL}/auth/reset-password/
+                      {URL}/auth/glemt-passord/
                       {Token}
                     </a>
                     <div style={{ marginTop: "20px" }}>
                       <a
-                        href={`${URL}/auth/reset-password/${Token}`}
+                        href={`${URL}/auth/glemt-passord/${Token}`}
                         style={{
                           display: "inline-block",
                           padding: "10px 20px",

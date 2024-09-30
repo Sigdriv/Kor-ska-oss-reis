@@ -2,7 +2,7 @@ interface Props {
   page: string;
 }
 
-export function Head({ page }: Props) {
+export function head({ page }: Props) {
   return (
     <head>
       <title>Kor ska oss reis | {page}</title>

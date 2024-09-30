@@ -25,7 +25,7 @@ export type ForgotPasswordValue = {
 };
 
 export type ResetPassword = {
-  token: string | undefined;
+  token: string;
   password: string;
   repeatPassword: string;
 };
@@ -64,6 +64,16 @@ export interface teamsByUser {
   id: string;
 }
 
+export type UpdateTeamsValues = {
+  id: string;
+  name: string;
+  email: string;
+  teamName: string;
+  countParticipants: string;
+  youngestParticipant?: number | string | null | undefined;
+  oldestParticipant?: string | null | undefined;
+};
+
 export interface NavItemWithChildren extends NavItem {
   items: NavItemWithChildren[];
 }
@@ -75,7 +85,7 @@ export interface SidebarNavItem extends NavItemWithChildren {}
 export type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export type CreateTeamsValues = z.infer<typeof createTeamsSchema>;
-export type UpdateTeamsValues = z.infer<typeof updateTeamsSchema>;
+// export type UpdateTeamsValues = z.infer<typeof updateTeamsSchema>;
 export type UpdateProfile = z.infer<typeof profileFormSchema>;
 
 export type updateUserType = z.infer<typeof updateUserSchema>;

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 
 import { resetPasswordSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
@@ -20,17 +20,11 @@ import { toast } from "@/components/ui/use-toast";
 import type { ResetPassword } from "@/types/types";
 import { resetPassword } from "@/actions";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useParams } from "next/navigation";
 
 export default function ResetPassword() {
   const [isPending, startTransition] = useTransition();
-  const [token, setToken] = useState<string>();
-
-  useEffect(() => {
-    const currentUrl = window.location.href;
-    const url = new URL(currentUrl);
-    const pathSegments = url.pathname.split("/"); // Split the path by '/'
-    setToken(pathSegments[pathSegments.length - 1]); // Get the last segment
-  }, []);
+  const { token } = useParams() as { token: string };
 
   const form = useForm({
     resolver: zodResolver(resetPasswordSchema),
@@ -79,6 +73,7 @@ export default function ResetPassword() {
           <CardContent>
             <Form {...form}>
               {token ? (
+                // TODO: Update to use MUI components instead
                 <form
                   className="space-y-6"
                   onSubmit={form.handleSubmit(onSubmit)}

@@ -150,7 +150,7 @@ export default function LogIn() {
                 <Button
                   onClick={() => signIn("google")}
                   variant="secondary"
-                  disabled
+                  // disabled
                 >
                   <Image
                     className="h-8 w-8 mr-2"
