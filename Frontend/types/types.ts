@@ -70,8 +70,8 @@ export type UpdateTeamsValues = {
   email: string;
   teamName: string;
   countParticipants: string;
-  youngestParticipant?: number | string | null | undefined;
-  oldestParticipant?: string | null | undefined;
+  youngestParticipant?: number | string | undefined;
+  oldestParticipant?: string | undefined;
 };
 
 export interface NavItemWithChildren extends NavItem {
