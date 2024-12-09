@@ -5,6 +5,7 @@ import Footer from "@/components/ui/footer";
 import NavBar from "../components/ui/NavBar";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,8 @@ export default function RootLayout({
     <SessionProvider>
       <html lang="en">
         <body className={inter.className}>
+          <GoogleAnalytics gaId="G-F53R2GJS5B" />
+
           <NavBar />
           {/* <main className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800"> */}
           <main className="min-h-screen">
